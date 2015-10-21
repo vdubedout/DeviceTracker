@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter;
+package eu.dubedout.devicecounter.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,21 +9,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import eu.dubedout.devicecounter.R;
 import eu.dubedout.devicecounter.bo.Device;
 import eu.dubedout.devicecounter.helper.PreferencesHelper;
+import eu.dubedout.devicecounter.helper.ServiceRegistry;
+import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
+import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
-public class MainActivity extends AppCompatActivity {
-    // TODO: VincentD 15-10-20 get domain name (Filter by domain to display devices
-    // TODO: VincentD 15-10-20 register device
-    // TODO: VincentD 15-10-20 get list of devices and registered names
+// TODO: VincentD 15-10-20 get list of devices and registered names
+// TODO: VincentD 15-10-20 register device
+// TODO: VincentD 15-10-20 get domain name (Filter by domain to display devices
+public class MainActivity extends AppCompatActivity implements MainActivityViewable{
+    private MainActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeToolbar();
+        initializeFab();
+
+        presenter = new MainActivityPresenter(this);
+        presenter.onCreate(savedInstanceState);
+    }
+
+    private void initializeToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
+    private void initializeFab() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,16 +47,14 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        tempRegisterThisDevice();
     }
 
-    public void tempRegisterThisDevice() {
-        if (PreferencesHelper.getDeviceRegistered(this).isEmpty()) {
-            PreferencesHelper.registerDevice(this, new Device("temp_id", "temp_model"));
-            Snackbar.make(this.findViewById(R.id.activity_main_coordinator), R.string.warning_temp_device_registered, Snackbar.LENGTH_LONG)
-                    .show();
-        }
+    @Override
+    public void launchDeviceRegistering() {
+        ServiceRegistry.getInstance(PreferencesHelper.class)
+                .registerDevice(new Device("temp_id", "temp_model"));
+        Snackbar.make(this.findViewById(R.id.activity_main_coordinator), R.string.warning_temp_device_registered, Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override

@@ -11,15 +11,21 @@ public class PreferencesHelper {
     private static String PREF_DEVICE_IDENTIFIER = "device_identifier";
     private static String PREF_DEVICE_MODEL = "device_model";
 
-    public static void registerDevice(Context context, Device device) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(DEVICE_PREF_NAME, Context.MODE_PRIVATE).edit();
+    private Context context;
+
+    public PreferencesHelper(Context context) {
+        this.context = context;
+    }
+
+    public void registerDevice(Device device) {
+        SharedPreferences.Editor editor = this.context.getSharedPreferences(DEVICE_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.putString(PREF_DEVICE_IDENTIFIER, device.getIdentifier());
         editor.putString(PREF_DEVICE_MODEL, device.getModel());
         editor.apply();
     }
 
-    public static Device getDeviceRegistered(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(DEVICE_PREF_NAME, Context.MODE_PRIVATE);
+    public Device getDeviceRegistered() {
+        SharedPreferences pref = this.context.getSharedPreferences(DEVICE_PREF_NAME, Context.MODE_PRIVATE);
         String device_id = pref.getString(PREF_DEVICE_IDENTIFIER, null);
         String device_model = pref.getString(PREF_DEVICE_MODEL, null);
         if (device_id != null && device_model != null) {
