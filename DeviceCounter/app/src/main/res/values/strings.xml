@@ -4,4 +4,7 @@
     <string name="warning_temp_device_registered">/!\\ Temp Device Registered /!\\</string>
     <string name="warning_device_not_registered_or_email_not_confirmed">Device has not been registered or email have not been confirmed</string>
     <string name="register_new_user">Register New User</string>
+    <string name="new_device">New Device</string>
+    <string name="register_new_label">Device Identifier</string>
+    <string name="register_new_model">Device Model</string>
 </resources>

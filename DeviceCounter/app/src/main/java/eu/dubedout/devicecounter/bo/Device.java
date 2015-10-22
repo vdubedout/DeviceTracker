@@ -5,11 +5,7 @@ import com.parse.ParseObject;
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class Device {
-    public static final String PARSE_DEVICE_OBJECT = "Device";
-    public static final String PARSE_DEVICE_IDENTIFIER = "identifier";
-    public static final String PARSE_DEVICE_MODEL = "model";
-    public static final String PARSE_DEVICE_LAST_USER = "lastUser";
-    public static final String PARSE_DEVICE_REGISTERED_BY_EMAIL = "registeredByEmail";
+    private int parseId = 0;
     private String identifier = "";
     private String model = "";
     private String lastUser = "";
@@ -54,11 +50,15 @@ public class Device {
         return model;
     }
 
-
     public String getIdentifier() {
         return identifier;
     }
 
+    public static final String PARSE_DEVICE_OBJECT = "Device";
+    public static final String PARSE_DEVICE_IDENTIFIER = "identifier";
+    public static final String PARSE_DEVICE_MODEL = "model";
+    public static final String PARSE_DEVICE_LAST_USER = "lastUser";
+    public static final String PARSE_DEVICE_REGISTERED_BY_EMAIL = "registeredByEmail";
     public ParseObject toParseObject() {
         ParseObject device = new ParseObject(PARSE_DEVICE_OBJECT);
         addParseField(device, PARSE_DEVICE_IDENTIFIER, identifier);
