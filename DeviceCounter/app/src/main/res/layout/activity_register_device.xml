@@ -20,13 +20,13 @@
         android:layout_alignParentTop="true"
         >
         <EditText
-            android:id="@+id/activity_register_device_device_label"
+            android:id="@+id/activity_register_device_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:hint="@string/register_new_label"
             android:nextFocusDown="@+id/activity_register_device_device_model"
-            android:nextFocusUp="@+id/activity_register_device_device_label"
+            android:nextFocusUp="@+id/activity_register_device_label"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +44,7 @@
             android:layout_alignParentTop="true"
             android:hint="@string/register_new_model"
             android:nextFocusDown="@+id/activity_register_device_button_send"
-            android:nextFocusUp="@id/activity_register_device_device_label"
+            android:nextFocusUp="@id/activity_register_device_label"
             />
     </android.support.design.widget.TextInputLayout>
 
