@@ -9,7 +9,7 @@ import android.widget.EditText;
 import eu.dubedout.devicecounter.R;
 import eu.dubedout.devicecounter.presenter.RegisterDevicePresenter;
 
-public class RegisterDeviceActivity extends AppCompatActivity {
+public class RegisterDeviceActivity extends AppCompatActivity implements RegisterDeviceViewable {
 
     private RegisterDevicePresenter presenter;
     private EditText deviceLabel;
@@ -34,7 +34,9 @@ public class RegisterDeviceActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.sendButtonClick(deviceLabel.getText(), deviceModel.getText());
+                presenter.sendButtonClick(
+                        deviceLabel.getText().toString(),
+                        deviceModel.getText().toString());
             }
         });
     }

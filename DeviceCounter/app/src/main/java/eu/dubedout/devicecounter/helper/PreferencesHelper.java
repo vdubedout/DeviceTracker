@@ -5,11 +5,12 @@ import android.content.SharedPreferences;
 
 import eu.dubedout.devicecounter.bo.Device;
 
-// TODO: VincentD 15-10-20 register in ServiceRegistry
+// TODO: VincentD 15-10-20 register in ServiceRegistryImpl
 public class PreferencesHelper {
-    private static String DEVICE_PREF_NAME = "device";
-    private static String PREF_DEVICE_IDENTIFIER = "device_identifier";
-    private static String PREF_DEVICE_MODEL = "device_model";
+    private static final String DEVICE_PREF_NAME = "device";
+    private static final String PREF_DEVICE_IDENTIFIER = "device_identifier";
+    private static final String PREF_DEVICE_MODEL = "device_model";
+    private static final String PREF_DEVICE_REGISTERBY = "register_by";
 
     private Context context;
 
@@ -21,6 +22,7 @@ public class PreferencesHelper {
         SharedPreferences.Editor editor = this.context.getSharedPreferences(DEVICE_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.putString(PREF_DEVICE_IDENTIFIER, device.getIdentifier());
         editor.putString(PREF_DEVICE_MODEL, device.getModel());
+        editor.putString(PREF_DEVICE_REGISTERBY, device.getRegisteredBy());
         editor.apply();
     }
 

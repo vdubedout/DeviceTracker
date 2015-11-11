@@ -1,34 +1,37 @@
 package eu.dubedout.devicecounter.bo;
 
-import com.parse.ParseObject;
-
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class Device {
-    private int parseId = 0;
+    public static final String REGISTER_BY_DEFAULT = "ypgmobiledevteam@gmail.com";
+    public static Device EMPTY_DEVICE = new Device();
+
     private String identifier = "";
     private String model = "";
     private String lastUser = "";
     private long lastUpdatedTimestamp = 0;
-    private String registeredByEmail = "ypgmobiledevteam@gmail.com";
-    public static Device EMPTY_DEVICE = new Device();
+    private String registeredByEmail = "";
 
     private Device() {
     }
 
     public Device(String identifier, String model) {
-        this.identifier = identifier;
-        this.model = model;
+        this(identifier, model, "", 0);
     }
 
-    public Device(String deviceId, String model, String lastUser, long lastUpdatedTimestamp) {
-        this.identifier = deviceId;
+    public Device(String identifier, String model, String lastUser, long lastUpdatedTimestamp) {
+        this.identifier = identifier;
         this.model = model;
         this.lastUser = lastUser;
         this.lastUpdatedTimestamp = lastUpdatedTimestamp;
+        this.registeredByEmail = REGISTER_BY_DEFAULT;
     }
 
-    public long getLastUpdatedTimestamp() {
+    public String getRegisteredBy() {
+        return registeredByEmail;
+    }
+
+    public long getLastUpdated() {
         return lastUpdatedTimestamp;
     }
 
@@ -52,27 +55,6 @@ public class Device {
 
     public String getIdentifier() {
         return identifier;
-    }
-
-    public static final String PARSE_DEVICE_OBJECT = "Device";
-    public static final String PARSE_DEVICE_IDENTIFIER = "identifier";
-    public static final String PARSE_DEVICE_MODEL = "model";
-    public static final String PARSE_DEVICE_LAST_USER = "lastUser";
-    public static final String PARSE_DEVICE_REGISTERED_BY_EMAIL = "registeredByEmail";
-    public ParseObject toParseObject() {
-        ParseObject device = new ParseObject(PARSE_DEVICE_OBJECT);
-        addParseField(device, PARSE_DEVICE_IDENTIFIER, identifier);
-        addParseField(device, PARSE_DEVICE_MODEL, model);
-        addParseField(device, PARSE_DEVICE_LAST_USER, lastUser);
-        addParseField(device, PARSE_DEVICE_REGISTERED_BY_EMAIL, registeredByEmail);
-        return device;
-    }
-
-    private ParseObject addParseField(ParseObject parseObject, String fieldName, String fieldValue) {
-        if (!StringHelper.isEmpty(fieldName) && !StringHelper.isEmpty(fieldValue)) {
-            parseObject.put(fieldName, fieldValue);
-        }
-        return parseObject;
     }
 
     public boolean isEmpty() {

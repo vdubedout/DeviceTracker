@@ -6,12 +6,15 @@ import com.parse.Parse;
 
 import java.util.HashMap;
 
+import eu.dubedout.devicecounter.client.DeviceClient;
+import eu.dubedout.devicecounter.client.DeviceClientImpl;
 import eu.dubedout.devicecounter.helper.PreferencesHelper;
-import eu.dubedout.devicecounter.helper.ServiceRegistry;
+import eu.dubedout.devicecounter.helper.ServiceRegistryImpl;
 
 public class App extends Application {
     private static final String PARSE_APPLICATION_ID = "eOjAfYckkkxD31cKbNeOIiGDBvGsaqGWWD5wlqyq";
     private static final String PARSE_APPLICATION_KEY = "HkHLLkd0Hb7yVwhjBFKZYi1979y0qVk8xq7jAbzb";
+    private static ServiceRegistryImpl serviceRegistry;
 
     @Override
     public void onCreate() {
@@ -25,10 +28,16 @@ public class App extends Application {
     }
 
     private void createServiceRegistry() {
+        serviceRegistry = new ServiceRegistryImpl();
+
         HashMap<Class, Object> map = new HashMap<>();
         map.put(PreferencesHelper.class, new PreferencesHelper(this));
+        map.put(DeviceClient.class, new DeviceClientImpl());
+        serviceRegistry.create(map);
+    }
 
-        ServiceRegistry.create(map);
+    public static ServiceRegistryImpl getServiceRegistry() {
+        return serviceRegistry;
     }
 
 
