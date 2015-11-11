@@ -21,7 +21,7 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
         setContentView(R.layout.activity_register_device);
 
         presenter = new RegisterDevicePresenter();
-        presenter.onCreate(savedInstanceState);
+        presenter.onCreate(savedInstanceState, this);
 
         initializeViews();
     }
@@ -41,5 +41,9 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
         });
     }
 
-
+    @Override
+    public void launchMainActivityForResult() {
+        setResult(RESULT_OK);
+        finish();
+    }
 }
