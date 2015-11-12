@@ -18,17 +18,19 @@
     <!--Register device with email to be able to see list-->
     <TextView
         android:id="@+id/content_main_warning_not_registered_email"
-        android:text="@string/action_settings"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:text="@string/action_settings"
+        tools:visibility="gone"/>
 
     <!--display devices and registering when user email is confirmed-->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/content_main_register_new_user_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
+
         <EditText
             android:id="@+id/content_main_register_new_user"
             android:layout_width="match_parent"
@@ -45,5 +47,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/content_main_register_new_user_wrapper"
         android:visibility="gone"
+        tools:visibility="visible"
         />
 </RelativeLayout>
