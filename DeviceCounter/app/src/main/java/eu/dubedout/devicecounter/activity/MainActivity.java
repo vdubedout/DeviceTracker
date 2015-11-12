@@ -1,18 +1,14 @@
 package eu.dubedout.devicecounter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import eu.dubedout.devicecounter.R;
-import eu.dubedout.devicecounter.bo.Device;
-import eu.dubedout.devicecounter.helper.PreferencesHelper;
-import eu.dubedout.devicecounter.helper.ServiceRegistry;
+import eu.dubedout.devicecounter.helper.Const;
 import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
@@ -27,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeToolbar();
-        initializeFab();
 
         presenter = new MainActivityPresenter(this);
         presenter.onCreate(savedInstanceState);
@@ -38,23 +33,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         setSupportActionBar(toolbar);
     }
 
-    private void initializeFab() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    @Override
+    public void launchDeviceRegistering() {
+        Intent intent = new Intent(this, RegisterDeviceActivity.class);
+        startActivityForResult(intent, Const.ForResult.REGISTER_DEVICE);
     }
 
     @Override
-    public void launchDeviceRegistering() {
-        ServiceRegistry.getInstance(PreferencesHelper.class)
-                .registerDevice(new Device("temp_id", "temp_model"));
-        Snackbar.make(this.findViewById(R.id.activity_main_coordinator), R.string.warning_temp_device_registered, Snackbar.LENGTH_LONG)
-                .show();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Const.ForResult.REGISTER_DEVICE) {
+            if (resultCode == RESULT_OK) {
+                presenter.onSuccessRegisteringDevice();
+            } else {
+                presenter.onFailedRegisteringDevice();
+            }
+        }
     }
 
     @Override

@@ -2,8 +2,8 @@ package eu.dubedout.devicecounter.presenter;
 
 import android.os.Bundle;
 
+import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.helper.PreferencesHelper;
-import eu.dubedout.devicecounter.helper.ServiceRegistry;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
 public class MainActivityPresenter {
@@ -20,8 +20,16 @@ public class MainActivityPresenter {
         // TODO: VincentD 15-10-21 last launch one day ago, show registering new user
     }
 
+    public void onFailedRegisteringDevice() {
+        // TODO: VincentD 15-11-10 display error popup, send back to registering device
+    }
+
+    public void onSuccessRegisteringDevice() {
+        // TODO: VincentD 15-11-10 display all devices registered under same email,
+    }
+
     private void checkFirstLaunchRegistering() {
-        PreferencesHelper pref = ServiceRegistry.getInstance(PreferencesHelper.class);
+        PreferencesHelper pref = App.getServiceRegistry().getInstance(PreferencesHelper.class);
         if (pref.getDeviceRegistered().isEmpty()) {
             viewable.launchDeviceRegistering();
         }
