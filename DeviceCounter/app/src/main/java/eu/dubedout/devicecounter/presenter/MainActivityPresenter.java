@@ -15,24 +15,29 @@ public class MainActivityPresenter {
 
     public void onCreate(Bundle savedInstanceState) {
         // TODO: VincentD 15-10-21 get savedInstanceState
-        checkFirstLaunchRegistering();
+
+        if (isDeviceRegistered()) {
+            viewable.launchDeviceRegistering();
+        } else {
+            viewable.showContent();
+        }
         // TODO: VincentD 15-10-21 get devices registered
         // TODO: VincentD 15-10-21 last launch one day ago, show registering new user
+    }
+
+    public void onSuccessRegisteringDevice() {
+        // TODO: VincentD 15-11-12 display snack bar to let know the device is corretly setup
+        // TODO: VincentD 15-11-10 display all devices registered under same email,
     }
 
     public void onFailedRegisteringDevice() {
         // TODO: VincentD 15-11-10 display error popup, send back to registering device
     }
 
-    public void onSuccessRegisteringDevice() {
-        // TODO: VincentD 15-11-10 display all devices registered under same email,
+    public boolean isDeviceRegistered() {
+        return App.getServiceRegistry()
+                .getInstance(PreferencesHelper.class)
+                .getDeviceRegistered()
+                .isEmpty();
     }
-
-    private void checkFirstLaunchRegistering() {
-        PreferencesHelper pref = App.getServiceRegistry().getInstance(PreferencesHelper.class);
-        if (pref.getDeviceRegistered().isEmpty()) {
-            viewable.launchDeviceRegistering();
-        }
-    }
-
 }

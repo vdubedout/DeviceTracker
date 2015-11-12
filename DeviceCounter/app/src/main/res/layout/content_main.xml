@@ -15,7 +15,7 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!--Register device with email to be able to see list-->
+    <!-- Register device with email to be able to change this device user -->
     <TextView
         android:id="@+id/content_main_warning_not_registered_email"
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:text="@string/action_settings"
         tools:visibility="gone"/>
 
-    <!--display devices and registering when user email is confirmed-->
+    <!-- Let user register itself to this device -->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/content_main_register_new_user_wrapper"
         android:layout_width="match_parent"
@@ -42,6 +42,7 @@
             />
     </android.support.design.widget.TextInputLayout>
 
+    <!-- Show the list and the person assigned to it -->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
