@@ -1,7 +1,10 @@
 package eu.dubedout.devicecounter.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,6 +29,8 @@ import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 // TODO: VincentD 15-10-20 get domain name (Filter by domain to display devices
 public class MainActivity extends AppCompatActivity implements MainActivityViewable{
     // Views
+    @Bind(R.id.activity_main_coordinator) CoordinatorLayout coordinatorLayout;
+    @Bind(R.id.content_main_parent_layout) View mainContentParent;
     @Bind(R.id.content_main_register_new_user_wrapper) TextInputLayout registerNewUserWrapper;
     @Bind(R.id.content_main_register_new_user) EditText registerNewUser;
     @Bind(R.id.content_main_warning_not_registered_email) TextView warningNotRegisteredDevice;
@@ -83,7 +89,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     @Override
     public void loadDevicesList() {
+        Snackbar.make(coordinatorLayout, "new user registered", Snackbar.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void removeFocusOnNewUserText() {
+        registerNewUser.clearFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mainContentParent, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     @Override

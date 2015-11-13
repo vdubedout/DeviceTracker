@@ -9,4 +9,6 @@ public interface MainActivityViewable {
 //    void showError();
 
     void loadDevicesList();
+
+    void removeFocusOnNewUserText();
 }

@@ -30,6 +30,7 @@ public class MainActivityPresenter {
     }
 
     public void onSuccessRegisteringDevice() {
+        viewable.showContent();
         // TODO: VincentD 15-11-12 display snack bar to let know the device is corretly setup
         // TODO: VincentD 15-11-10 display all devices registered under same email,
     }
@@ -45,7 +46,7 @@ public class MainActivityPresenter {
     }
 
     public void sendNewUser(String newUserName) {
-        if (StringHelper.isEmpty(newUserName)) {
+        if (!StringHelper.isEmpty(newUserName)) {
             Device device = App.getInstance(PreferencesHelper.class).getDeviceRegistered();
             device.setUser(newUserName);
 
@@ -57,6 +58,7 @@ public class MainActivityPresenter {
 
         @Override
         public void onSuccess() {
+            viewable.removeFocusOnNewUserText();
             viewable.loadDevicesList();
         }
 

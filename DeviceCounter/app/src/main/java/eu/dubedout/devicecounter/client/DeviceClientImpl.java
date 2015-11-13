@@ -78,7 +78,7 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     private ParseObject addParseField(ParseObject parseObject, String fieldName, String fieldValue) {
-        if (!StringHelper.isEmpty(fieldName) && !StringHelper.isEmpty(fieldValue)) {
+        if (!StringHelper.isEmpty(fieldName)) {
             parseObject.put(fieldName, fieldValue);
         }
         return parseObject;

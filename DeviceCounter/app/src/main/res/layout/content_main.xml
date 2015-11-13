@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -20,7 +21,7 @@
         android:id="@+id/content_main_warning_not_registered_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_settings"
+        android:text="@string/warning_device_not_registered_or_email_not_confirmed"
         tools:visibility="gone"/>
 
     <!-- Let user register itself to this device -->
@@ -39,7 +40,6 @@
             android:hint="@string/register_new_user"
             android:inputType="text"
             android:imeOptions="actionSend"
-            android:nextFocusDown="@id/content_main_register_new_user"
             android:nextFocusUp="@id/content_main_register_new_user"
             />
     </android.support.design.widget.TextInputLayout>
