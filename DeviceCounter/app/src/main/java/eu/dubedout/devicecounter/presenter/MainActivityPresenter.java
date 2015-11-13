@@ -40,4 +40,8 @@ public class MainActivityPresenter {
                 .getDeviceRegistered()
                 .isEmpty();
     }
+
+    public void sendNewUser(String newUserName) {
+
+    }
 }

@@ -37,6 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:hint="@string/register_new_user"
+            android:inputType="text"
+            android:imeOptions="actionSend"
             android:nextFocusDown="@id/content_main_register_new_user"
             android:nextFocusUp="@id/content_main_register_new_user"
             />
