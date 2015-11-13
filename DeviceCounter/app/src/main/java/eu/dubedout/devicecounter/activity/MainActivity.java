@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     @Override
+    public void loadDevicesList() {
+
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Const.ForResult.REGISTER_DEVICE) {
             if (resultCode == RESULT_OK) {

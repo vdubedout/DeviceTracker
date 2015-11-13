@@ -31,13 +31,18 @@ public class App extends Application {
         serviceRegistry = new ServiceRegistryImpl();
 
         HashMap<Class, Object> map = new HashMap<>();
-        map.put(PreferencesHelper.class, new PreferencesHelper(this));
-        map.put(DeviceClient.class, new DeviceClientImpl());
+        PreferencesHelper preferencesHelper = new PreferencesHelper(this);
+        map.put(PreferencesHelper.class, preferencesHelper);
+        map.put(DeviceClient.class, new DeviceClientImpl(preferencesHelper));
         serviceRegistry.create(map);
     }
 
     public static ServiceRegistryImpl getServiceRegistry() {
         return serviceRegistry;
+    }
+
+    public static <T> T getInstance(Class<T> clazz) {
+        return getServiceRegistry().getInstance(clazz);
     }
 
 

@@ -7,4 +7,6 @@ public interface MainActivityViewable {
     void showContent();
 //    void showLoading();
 //    void showError();
+
+    void loadDevicesList();
 }
