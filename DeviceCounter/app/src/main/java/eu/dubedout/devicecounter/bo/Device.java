@@ -9,8 +9,7 @@ public class Device {
     private String identifier = "";
     private String model = "";
     private String lastUser = "";
-    private long lastUpdatedTimestamp = 0;
-    private String registeredByEmail = "";
+    private String registeredBy = "";
 
     private Device() {
     }
@@ -23,26 +22,19 @@ public class Device {
         this.identifier = identifier;
         this.model = model;
         this.lastUser = lastUser;
-        this.lastUpdatedTimestamp = lastUpdatedTimestamp;
-        this.registeredByEmail = REGISTER_BY_DEFAULT;
+        this.registeredBy = REGISTER_BY_DEFAULT;
     }
 
     public String getRegisteredBy() {
-        return registeredByEmail;
+        return registeredBy;
     }
 
-    public long getLastUpdated() {
-        return lastUpdatedTimestamp;
+    public void setRegisteredBy(String registeredBy) {
+        this.registeredBy = registeredBy;
     }
 
-    public Device setUser(String user) {
-        if (StringHelper.isEmpty(user)) {
-            new RuntimeException("User can't be null or empty");
-            return this;
-        }
+    public void setUser(String user) {
         this.lastUser = user;
-        this.lastUpdatedTimestamp = System.currentTimeMillis();
-        return this;
     }
 
     public String getLastUser() {
@@ -63,5 +55,4 @@ public class Device {
         }
         return false;
     }
-
 }

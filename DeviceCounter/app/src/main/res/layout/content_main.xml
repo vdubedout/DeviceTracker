@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -15,15 +16,15 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!--Register device with email to be able to see list-->
+    <!-- Register device with email to be able to change this device user -->
     <TextView
         android:id="@+id/content_main_warning_not_registered_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_settings"
+        android:text="@string/warning_device_not_registered_or_email_not_confirmed"
         tools:visibility="gone"/>
 
-    <!--display devices and registering when user email is confirmed-->
+    <!-- Let user register itself to this device -->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/content_main_register_new_user_wrapper"
         android:layout_width="match_parent"
@@ -37,11 +38,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:hint="@string/register_new_user"
-            android:nextFocusDown="@id/content_main_register_new_user"
+            android:inputType="text"
+            android:imeOptions="actionSend"
             android:nextFocusUp="@id/content_main_register_new_user"
             />
     </android.support.design.widget.TextInputLayout>
 
+    <!-- Show the list and the person assigned to it -->
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
