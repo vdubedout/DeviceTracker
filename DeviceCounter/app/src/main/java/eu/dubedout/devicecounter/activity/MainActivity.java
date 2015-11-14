@@ -17,9 +17,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.dubedout.devicecounter.R;
+import eu.dubedout.devicecounter.bo.Device;
 import eu.dubedout.devicecounter.helper.Const;
 import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     @Override
-    public void loadDevicesList() {
+    public void loadDevicesList(List<Device> deviceList) {
         Snackbar.make(coordinatorLayout, "new user registered", Snackbar.LENGTH_SHORT).show();
     }
 

@@ -2,10 +2,13 @@ package eu.dubedout.devicecounter.presenter;
 
 import android.os.Bundle;
 
+import java.util.List;
+
 import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.helper.PreferencesHelper;
+import eu.dubedout.devicecounter.helper.ResponseCallback;
 import eu.dubedout.devicecounter.helper.ResponseHandler;
 import eu.dubedout.devicecounter.helper.StringHelper;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
@@ -21,12 +24,28 @@ public class MainActivityPresenter {
         // TODO: VincentD 15-10-21 get savedInstanceState
 
         if (isDeviceRegistered()) {
-            viewable.launchDeviceRegistering();
-        } else {
             viewable.showContent();
+            loadDeviceList();
+        } else {
+            viewable.launchDeviceRegistering();
         }
         // TODO: VincentD 15-10-21 get devices registered
         // TODO: VincentD 15-10-21 last launch one day ago, show registering new user
+    }
+
+    private void loadDeviceList() {
+        App.getInstance(DeviceClient.class)
+                .getDevices(new ResponseCallback<List<Device>>() {
+                    @Override
+                    public void onSuccess(List<Device> deviceList) {
+                        viewable.loadDevicesList(deviceList);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        // TODO: VincentD 15-11-14 handle error
+                    }
+                });
     }
 
     public void onSuccessRegisteringDevice() {
@@ -40,7 +59,7 @@ public class MainActivityPresenter {
     }
 
     public boolean isDeviceRegistered() {
-        return App.getInstance(PreferencesHelper.class)
+        return !App.getInstance(PreferencesHelper.class)
                 .getDeviceRegistered()
                 .isEmpty();
     }
@@ -49,17 +68,15 @@ public class MainActivityPresenter {
         if (!StringHelper.isEmpty(newUserName)) {
             Device device = App.getInstance(PreferencesHelper.class).getDeviceRegistered();
             device.setUser(newUserName);
-
             App.getInstance(DeviceClient.class).setNewUser(device, new SetNewUserResponseHandler());
         }
     }
 
     private class SetNewUserResponseHandler implements ResponseHandler {
-
         @Override
         public void onSuccess() {
             viewable.removeFocusOnNewUserText();
-            viewable.loadDevicesList();
+            loadDeviceList();
         }
 
         @Override
