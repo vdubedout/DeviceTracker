@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,11 +16,17 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.dubedout.devicecounter.R;
+import eu.dubedout.devicecounter.adapter.DeviceAdapter;
+import eu.dubedout.devicecounter.bo.Device;
 import eu.dubedout.devicecounter.helper.Const;
 import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
@@ -31,9 +38,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     // Views
     @Bind(R.id.activity_main_coordinator) CoordinatorLayout coordinatorLayout;
     @Bind(R.id.content_main_parent_layout) View mainContentParent;
+    @Bind(R.id.content_main_warning_not_registered_email) TextView warningNotRegisteredDevice;
     @Bind(R.id.content_main_register_new_user_wrapper) TextInputLayout registerNewUserWrapper;
     @Bind(R.id.content_main_register_new_user) EditText registerNewUser;
-    @Bind(R.id.content_main_warning_not_registered_email) TextView warningNotRegisteredDevice;
+    @Bind(R.id.content_main_send_button) ImageButton sendNewUserButton;
+    @Bind(R.id.content_main_device_list) RecyclerView deviceRecyclerView;
+    @Bind(R.id.content_main_loading_state) ProgressBar loadingProgress;
     private MainActivityPresenter presenter;
 
     @Override
@@ -56,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     private void initializeViews() {
         registerNewUser.setOnEditorActionListener(new OnNewUserKeyboardSend());
+        sendNewUserButton.setOnClickListener(new OnNewUserButtonSend());
+        deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -85,11 +97,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     public void showContent() {
         registerNewUserWrapper.setVisibility(View.VISIBLE);
         warningNotRegisteredDevice.setVisibility(View.GONE);
+        deviceRecyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void loadDevicesList() {
-        Snackbar.make(coordinatorLayout, "new user registered", Snackbar.LENGTH_SHORT).show();
+    public void showLoading(boolean isLoading) {
+        if (isLoading) {
+            loadingProgress.setVisibility(View.VISIBLE);
+        } else {
+            loadingProgress.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void loadDevicesList(List<Device> deviceList) {
+        deviceRecyclerView.setAdapter(new DeviceAdapter(deviceList));
     }
 
     @Override
@@ -118,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
                 return true;
             }
             return false;
+        }
+    }
+
+    private class OnNewUserButtonSend implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            presenter.sendNewUser(registerNewUser.getText().toString());
         }
     }
 }
