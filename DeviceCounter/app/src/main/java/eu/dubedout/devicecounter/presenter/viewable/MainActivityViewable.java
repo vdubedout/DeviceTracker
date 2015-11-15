@@ -9,7 +9,7 @@ public interface MainActivityViewable {
     void launchDeviceRegistering();
 
     void showContent();
-//    void showLoading();
+    void showLoading(boolean isLoading);
 //    void showError();
 
     void loadDevicesList(List<Device> deviceList);

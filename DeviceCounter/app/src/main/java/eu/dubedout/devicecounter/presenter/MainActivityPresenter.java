@@ -39,6 +39,7 @@ public class MainActivityPresenter {
                     @Override
                     public void onSuccess(List<Device> deviceList) {
                         viewable.loadDevicesList(deviceList);
+                        viewable.showLoading(false);
                     }
 
                     @Override
