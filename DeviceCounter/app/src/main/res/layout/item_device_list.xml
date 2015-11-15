@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_medium">
+    <TextView
+        android:id="@+id/item_device_list_model"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="LG G3"/>
+
+    <TextView
+        android:id="@+id/item_device_list_current_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:gravity="right"
+        tools:text="Vincent"/>
+
+    <TextView
+        android:id="@+id/item_device_list_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_medium"
+        android:layout_weight="0"
+        android:gravity="right"
+        tools:text="10 dec, 2015"/>
+</LinearLayout>
