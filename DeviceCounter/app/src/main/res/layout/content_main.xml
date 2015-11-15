@@ -46,10 +46,10 @@
 
     <!-- Show the list and the person assigned to it -->
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/content_main_device_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/content_main_register_new_user_wrapper"
-        android:visibility="gone"
         tools:visibility="visible"
         />
 </RelativeLayout>

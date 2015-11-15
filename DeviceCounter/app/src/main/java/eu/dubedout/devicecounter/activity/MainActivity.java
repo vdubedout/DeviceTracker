@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.dubedout.devicecounter.R;
+import eu.dubedout.devicecounter.adapter.DeviceAdapter;
 import eu.dubedout.devicecounter.bo.Device;
 import eu.dubedout.devicecounter.helper.Const;
 import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     @Bind(R.id.content_main_register_new_user_wrapper) TextInputLayout registerNewUserWrapper;
     @Bind(R.id.content_main_register_new_user) EditText registerNewUser;
     @Bind(R.id.content_main_warning_not_registered_email) TextView warningNotRegisteredDevice;
+    @Bind(R.id.content_main_device_list) RecyclerView deviceRecyclerView;
     private MainActivityPresenter presenter;
 
     @Override
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     private void initializeViews() {
         registerNewUser.setOnEditorActionListener(new OnNewUserKeyboardSend());
+        deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     @Override
     public void loadDevicesList(List<Device> deviceList) {
-        Snackbar.make(coordinatorLayout, "new user registered", Snackbar.LENGTH_SHORT).show();
+        deviceRecyclerView.setAdapter(new DeviceAdapter(deviceList));
     }
 
     @Override
