@@ -68,6 +68,10 @@ public class Device {
         return false;
     }
 
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
     public static class Builder {
         private String identifier;
         private String model;
