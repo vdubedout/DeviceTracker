@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,9 +37,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     // Views
     @Bind(R.id.activity_main_coordinator) CoordinatorLayout coordinatorLayout;
     @Bind(R.id.content_main_parent_layout) View mainContentParent;
+    @Bind(R.id.content_main_warning_not_registered_email) TextView warningNotRegisteredDevice;
     @Bind(R.id.content_main_register_new_user_wrapper) TextInputLayout registerNewUserWrapper;
     @Bind(R.id.content_main_register_new_user) EditText registerNewUser;
-    @Bind(R.id.content_main_warning_not_registered_email) TextView warningNotRegisteredDevice;
+    @Bind(R.id.content_main_send_button) ImageView sendNewUserButton;
     @Bind(R.id.content_main_device_list) RecyclerView deviceRecyclerView;
     private MainActivityPresenter presenter;
 
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     private void initializeViews() {
         registerNewUser.setOnEditorActionListener(new OnNewUserKeyboardSend());
+        sendNewUserButton.setOnClickListener(new OnNewUserButtonSend());
         deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -125,6 +128,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
                 return true;
             }
             return false;
+        }
+    }
+
+    private class OnNewUserButtonSend implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            presenter.sendNewUser(registerNewUser.getText().toString());
         }
     }
 }

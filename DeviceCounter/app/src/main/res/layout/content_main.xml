@@ -6,8 +6,6 @@
     android:id="@+id/content_main_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -24,11 +22,25 @@
         android:text="@string/warning_device_not_registered_or_email_not_confirmed"
         tools:visibility="gone"/>
 
+    <ImageView
+        android:id="@+id/content_main_send_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingLeft="@dimen/padding_medium"
+        android:paddingBottom="@dimen/padding_medium"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@android:drawable/ic_menu_send"/>
+
     <!-- Let user register itself to this device -->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/content_main_register_new_user_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/content_main_send_button"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -36,11 +48,9 @@
             android:id="@+id/content_main_register_new_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:hint="@string/register_new_user"
             android:inputType="text"
             android:imeOptions="actionSend"
-            android:nextFocusUp="@id/content_main_register_new_user"
             />
     </android.support.design.widget.TextInputLayout>
 
