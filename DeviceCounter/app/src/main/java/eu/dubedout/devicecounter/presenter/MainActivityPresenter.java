@@ -38,17 +38,17 @@ public class MainActivityPresenter {
 
     private void loadDeviceList() {
         App.getInstance(DeviceClient.class)
-                .getDevices(new ResponseCallback<List<Device>>() {
-                    @Override
-                    public void onSuccess(List<Device> deviceList) {
-                        viewable.loadDevicesList(deviceList);
-                        viewable.showContent();
-                    }
+            .getDevices(new ResponseCallback<List<Device>>() {
+                @Override
+                public void onSuccess(List<Device> deviceList) {
+                    viewable.loadDevicesList(deviceList);
+                    viewable.showContent();
+                }
 
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                    }
-                });
+                @Override
+                public void onFailure(Throwable throwable) {
+                }
+            });
     }
 
     public void onSuccessRegisteringDevice() {
