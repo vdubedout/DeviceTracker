@@ -32,10 +32,8 @@ import eu.dubedout.devicecounter.helper.Const;
 import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
-// TODO: VincentD 15-10-20 get list of devices and registered names
-// TODO: VincentD 15-10-20 register device
 // TODO: VincentD 15-10-20 get domain name (Filter by domain to display devices
-public class MainActivity extends AppCompatActivity implements MainActivityViewable{
+public class MainActivity extends AppCompatActivity implements MainActivityViewable {
     // Views
     @Bind(R.id.activity_main_coordinator) CoordinatorLayout coordinatorLayout;
     @Bind(R.id.content_main_parent_layout) View mainContentParent;
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     @Bind(R.id.content_main_send_button) ImageButton buttonNewUser;
     @Bind(R.id.content_main_device_list) RecyclerView deviceRecyclerView;
     @Bind(R.id.content_main_loading_state) ProgressBar loadingProgress;
+
     private MainActivityPresenter presenter;
 
     @Override
@@ -73,8 +72,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Const.ForResult.REGISTER_DEVICE) {
+            if (resultCode == RESULT_OK) {
+                presenter.onSuccessRegisteringDevice();
+            } else {
+                presenter.onFailedRegisteringDevice();
+            }
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -118,17 +127,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         registerNewUser.clearFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(mainContentParent, InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Const.ForResult.REGISTER_DEVICE) {
-            if (resultCode == RESULT_OK) {
-                presenter.onSuccessRegisteringDevice();
-            } else {
-                presenter.onFailedRegisteringDevice();
-            }
-        }
     }
 
     private class OnNewUserKeyboardSend implements TextView.OnEditorActionListener {

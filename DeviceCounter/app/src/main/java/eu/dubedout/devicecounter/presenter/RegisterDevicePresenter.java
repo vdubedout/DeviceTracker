@@ -32,11 +32,9 @@ public class RegisterDevicePresenter {
 
     private void registerNewDeviceBackend(String deviceLabelText, String deviceModelText) {
         Device device = new Device(deviceLabelText, deviceModelText);
-        App.getServiceRegistry()
-                .getInstance(DeviceClient.class)
+        App.getInstance(DeviceClient.class)
                 .setNewDevice(device, new RegisterDeviceResponseHandler());
-        App.getServiceRegistry()
-                .getInstance(PreferencesHelper.class)
+        App.getInstance(PreferencesHelper.class)
                 .registerDevice(device);
     }
 
