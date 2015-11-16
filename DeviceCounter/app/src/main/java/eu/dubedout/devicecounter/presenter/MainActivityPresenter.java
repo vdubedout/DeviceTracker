@@ -24,13 +24,16 @@ public class MainActivityPresenter {
         // TODO: VincentD 15-10-21 get savedInstanceState
 
         if (isDeviceRegistered()) {
-            viewable.showContent();
-            loadDeviceList();
-        } else {
-            viewable.launchDeviceRegistering();
+            viewable.showNewUserRegisteringBox();
         }
-        // TODO: VincentD 15-10-21 get devices registered
+
+        loadDeviceList();
+
         // TODO: VincentD 15-10-21 last launch one day ago, show registering new user
+    }
+
+    public void registerNewDeviceClick() {
+        viewable.launchDeviceRegistering();
     }
 
     private void loadDeviceList() {
@@ -39,20 +42,19 @@ public class MainActivityPresenter {
                     @Override
                     public void onSuccess(List<Device> deviceList) {
                         viewable.loadDevicesList(deviceList);
-                        viewable.showLoading(false);
+                        viewable.showContent();
                     }
 
                     @Override
                     public void onFailure(Throwable throwable) {
-                        // TODO: VincentD 15-11-14 handle error
                     }
                 });
     }
 
     public void onSuccessRegisteringDevice() {
-        viewable.showContent();
+        viewable.showNewUserRegisteringBox();
+        loadDeviceList();
         // TODO: VincentD 15-11-12 display snack bar to let know the device is corretly setup
-        // TODO: VincentD 15-11-10 display all devices registered under same email,
     }
 
     public void onFailedRegisteringDevice() {

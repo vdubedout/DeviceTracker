@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -38,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     // Views
     @Bind(R.id.activity_main_coordinator) CoordinatorLayout coordinatorLayout;
     @Bind(R.id.content_main_parent_layout) View mainContentParent;
-    @Bind(R.id.content_main_warning_not_registered_email) TextView warningNotRegisteredDevice;
+    @Bind(R.id.content_main_register_new_device) Button buttonNewDevice;
     @Bind(R.id.content_main_register_new_user_wrapper) TextInputLayout registerNewUserWrapper;
     @Bind(R.id.content_main_register_new_user) EditText registerNewUser;
-    @Bind(R.id.content_main_send_button) ImageButton sendNewUserButton;
+    @Bind(R.id.content_main_send_button) ImageButton buttonNewUser;
     @Bind(R.id.content_main_device_list) RecyclerView deviceRecyclerView;
     @Bind(R.id.content_main_loading_state) ProgressBar loadingProgress;
     private MainActivityPresenter presenter;
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     private void initializeViews() {
         registerNewUser.setOnEditorActionListener(new OnNewUserKeyboardSend());
-        sendNewUserButton.setOnClickListener(new OnNewUserButtonSend());
+        buttonNewUser.setOnClickListener(new OnNewUserButtonSend());
+        buttonNewDevice.setOnClickListener(new OnRegisterNewDeviceClick());
         deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -94,19 +96,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     @Override
-    public void showContent() {
+    public void showNewUserRegisteringBox() {
         registerNewUserWrapper.setVisibility(View.VISIBLE);
-        warningNotRegisteredDevice.setVisibility(View.GONE);
-        deviceRecyclerView.setVisibility(View.VISIBLE);
+        buttonNewUser.setVisibility(View.VISIBLE);
+        buttonNewDevice.setVisibility(View.GONE);
     }
 
     @Override
-    public void showLoading(boolean isLoading) {
-        if (isLoading) {
-            loadingProgress.setVisibility(View.VISIBLE);
-        } else {
-            loadingProgress.setVisibility(View.GONE);
-        }
+    public void showContent() {
+        deviceRecyclerView.setVisibility(View.VISIBLE);
+        loadingProgress.setVisibility(View.GONE);
     }
 
     @Override
@@ -147,6 +146,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         @Override
         public void onClick(View v) {
             presenter.sendNewUser(registerNewUser.getText().toString());
+        }
+    }
+
+    private class OnRegisterNewDeviceClick implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            presenter.registerNewDeviceClick();
         }
     }
 }

@@ -7,10 +7,9 @@ import eu.dubedout.devicecounter.bo.Device;
 public interface MainActivityViewable {
 
     void launchDeviceRegistering();
-
+    void showNewUserRegisteringBox();
     void showContent();
-    void showLoading(boolean isLoading);
-//    void showError();
+    //    void showError();
 
     void loadDevicesList(List<Device> deviceList);
 
