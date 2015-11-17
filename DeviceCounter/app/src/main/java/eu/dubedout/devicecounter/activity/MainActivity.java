@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +18,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     @Bind(R.id.content_main_register_new_device) Button buttonNewDevice;
     @Bind(R.id.content_main_register_new_user_wrapper) TextInputLayout registerNewUserWrapper;
     @Bind(R.id.content_main_register_new_user) EditText registerNewUser;
-    @Bind(R.id.content_main_send_button) ImageButton buttonNewUser;
     @Bind(R.id.content_main_device_list) RecyclerView deviceRecyclerView;
     @Bind(R.id.content_main_loading_state) ProgressBar loadingProgress;
 
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     private void initializeViews() {
         registerNewUser.setOnEditorActionListener(new OnNewUserKeyboardSend());
-        buttonNewUser.setOnClickListener(new OnNewUserButtonSend());
         buttonNewDevice.setOnClickListener(new OnRegisterNewDeviceClick());
         deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -107,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     @Override
     public void showNewUserRegisteringBox() {
         registerNewUserWrapper.setVisibility(View.VISIBLE);
-        buttonNewUser.setVisibility(View.VISIBLE);
         buttonNewDevice.setVisibility(View.GONE);
     }
 
@@ -123,10 +120,20 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     @Override
-    public void removeFocusOnNewUserText() {
-        registerNewUser.clearFocus();
+    public void removeKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(mainContentParent, InputMethodManager.HIDE_NOT_ALWAYS);
+        imm.hideSoftInputFromWindow(registerNewUser.getWindowToken(), 0);
+    }
+
+    @Override
+    public void clearEditText() {
+        registerNewUser.setText("");
+        registerNewUser.clearFocus();
+    }
+
+    @Override
+    public void showSentUserSuccess() {
+        Snackbar.make(coordinatorLayout, R.string.new_user_sent_success, Snackbar.LENGTH_SHORT).show();
     }
 
     private class OnNewUserKeyboardSend implements TextView.OnEditorActionListener {
@@ -137,13 +144,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
                 return true;
             }
             return false;
-        }
-    }
-
-    private class OnNewUserButtonSend implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            presenter.sendNewUser(registerNewUser.getText().toString());
         }
     }
 

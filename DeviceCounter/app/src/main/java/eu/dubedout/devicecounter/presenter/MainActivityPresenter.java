@@ -73,12 +73,15 @@ public class MainActivityPresenter {
             device.setUser(newUserName);
             App.getInstance(DeviceClient.class).setNewUser(device, new SetNewUserResponseHandler());
         }
+        viewable.removeKeyboard();
+
     }
 
     private class SetNewUserResponseHandler implements ResponseHandler {
         @Override
         public void onSuccess() {
-            viewable.removeFocusOnNewUserText();
+            viewable.clearEditText();
+            viewable.showSentUserSuccess();
             loadDeviceList();
         }
 

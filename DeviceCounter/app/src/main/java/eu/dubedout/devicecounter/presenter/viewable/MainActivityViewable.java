@@ -9,9 +9,9 @@ public interface MainActivityViewable {
     void launchDeviceRegistering();
     void showNewUserRegisteringBox();
     void showContent();
-    //    void showError();
-
     void loadDevicesList(List<Device> deviceList);
+    void removeKeyboard();
+    void clearEditText();
 
-    void removeFocusOnNewUserText();
+    void showSentUserSuccess();
 }
