@@ -2,23 +2,29 @@ package eu.dubedout.devicecounter.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import eu.dubedout.devicecounter.R;
 import eu.dubedout.devicecounter.presenter.RegisterDevicePresenter;
 
 public class RegisterDeviceActivity extends AppCompatActivity implements RegisterDeviceViewable {
 
+    @Bind(R.id.activity_register_device_label) EditText deviceLabel;
+    @Bind(R.id.activity_register_device_model) EditText deviceModel;
+    @Bind(R.id.activity_register_device_button_send) Button sendButton;
+
     private RegisterDevicePresenter presenter;
-    private EditText deviceLabel;
-    private EditText deviceModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_device);
+        ButterKnife.bind(this);
 
         presenter = new RegisterDevicePresenter();
         presenter.onCreate(savedInstanceState, this);
@@ -27,10 +33,9 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
     }
 
     private void initializeViews() {
-        deviceLabel = (EditText) this.findViewById(R.id.activity_register_device_label);
-        deviceModel = (EditText) this.findViewById(R.id.activity_register_device_device_model);
+        deviceLabel.setOnKeyListener(new OnTextChangeButtonActivationCheck());
+        deviceModel.setOnKeyListener(new OnTextChangeButtonActivationCheck());
 
-        Button sendButton = (Button) this.findViewById(R.id.activity_register_device_button_send);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,5 +50,23 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
     public void launchMainActivityForResult() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void activateButtonClick() {
+        sendButton.setEnabled(true);
+    }
+
+    @Override
+    public void deactivateButtonClick() {
+        sendButton.setEnabled(false);
+    }
+
+    private class OnTextChangeButtonActivationCheck implements View.OnKeyListener {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            presenter.verifyButtonState(deviceLabel.getText().toString(), deviceModel.getText().toString());
+            return false;
+        }
     }
 }
