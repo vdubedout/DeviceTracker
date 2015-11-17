@@ -8,6 +8,7 @@ import eu.dubedout.devicecounter.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.helper.PreferencesHelper;
 import eu.dubedout.devicecounter.helper.ResponseHandler;
+import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class RegisterDevicePresenter {
     private RegisterDeviceViewable viewable;
@@ -21,13 +22,19 @@ public class RegisterDevicePresenter {
         registerNewDeviceBackend(deviceLabelText, deviceModelText);
     }
 
+    public void verifyButtonState(String deviceId, String deviceModel) {
+        if (StringHelper.isEmpty(deviceId) || StringHelper.isEmpty(deviceModel)) {
+            viewable.deactivateButtonClick();
+        } else {
+            viewable.activateButtonClick();
+        }
+    }
+
     private void registerNewDeviceBackend(String deviceLabelText, String deviceModelText) {
         Device device = new Device(deviceLabelText, deviceModelText);
-        App.getServiceRegistry()
-                .getInstance(DeviceClient.class)
+        App.getInstance(DeviceClient.class)
                 .setNewDevice(device, new RegisterDeviceResponseHandler());
-        App.getServiceRegistry()
-                .getInstance(PreferencesHelper.class)
+        App.getInstance(PreferencesHelper.class)
                 .registerDevice(device);
     }
 
