@@ -25,11 +25,11 @@
         </activity>
         <activity android:name=".activity.RegisterDeviceActivity"
             android:label="@string/new_device"
-            android:parentActivityName="eu.dubedout.devicecounter.activity.MainActivity">
+            android:parentActivityName=".activity.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="eu.dubedout.devicecounter.activity.MainActivity" />
+                android:value=".activity.MainActivity" />
         </activity>
     </application>
 
