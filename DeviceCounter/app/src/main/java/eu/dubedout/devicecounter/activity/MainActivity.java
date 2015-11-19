@@ -1,5 +1,6 @@
 package eu.dubedout.devicecounter.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -92,10 +93,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
             case R.id.action_settings:
                 return true;
             case R.id.action_login:
+                DisplayLoginActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void DisplayLoginActivity(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override

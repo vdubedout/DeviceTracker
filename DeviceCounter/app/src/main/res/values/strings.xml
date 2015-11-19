@@ -9,4 +9,5 @@
     <string name="register_new_label">Device Identifier</string>
     <string name="register_new_model">Device Model</string>
     <string name="new_user_sent_success">User Sent Sucessfully</string>
+    <string name="title_activity_login">Login</string>
 </resources>
