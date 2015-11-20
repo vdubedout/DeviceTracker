@@ -88,12 +88,24 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_login:
+                displayLoginActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    public void displayLoginActivity() {
+        Intent intent = new Intent(this, DisplayLoginActivity.class);
+        startActivity(intent);
     }
 
     @Override
