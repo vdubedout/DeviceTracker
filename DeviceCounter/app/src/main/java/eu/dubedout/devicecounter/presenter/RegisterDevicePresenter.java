@@ -3,7 +3,7 @@ package eu.dubedout.devicecounter.presenter;
 import android.os.Bundle;
 
 import eu.dubedout.devicecounter.App;
-import eu.dubedout.devicecounter.activity.RegisterDeviceViewable;
+import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
 import eu.dubedout.devicecounter.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.helper.PreferencesHelper;

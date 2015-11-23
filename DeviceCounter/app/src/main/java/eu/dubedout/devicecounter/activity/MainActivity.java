@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     public void displayLoginActivity() {
-        Intent intent = new Intent(this, DisplayLoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 

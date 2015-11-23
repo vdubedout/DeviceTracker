@@ -1,7 +1,6 @@
 package eu.dubedout.devicecounter.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -13,6 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.dubedout.devicecounter.R;
 import eu.dubedout.devicecounter.presenter.RegisterDevicePresenter;
+import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
 
 public class RegisterDeviceActivity extends AppCompatActivity implements RegisterDeviceViewable {
 
