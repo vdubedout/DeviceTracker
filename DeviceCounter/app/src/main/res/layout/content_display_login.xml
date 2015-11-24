@@ -13,7 +13,7 @@
     tools:context=".activity.LoginActivity"
     tools:showIn="@layout/activity_login">
 
-    <!--User name-->
+    <!--Username-->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/activity_login_username_wraper"
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             />
     </android.support.design.widget.TextInputLayout>
 
-    <!--device model-->
+    <!-- Password -->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/activity_login_password_wraper"
         android:layout_width="match_parent"
@@ -44,6 +44,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:hint="@string/login_password"
+            android:inputType="textPassword"
+            android:nextFocusDown="@+id/activity_register_device_button_send"
+            android:nextFocusUp="@id/activity_register_device_label"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <!-- Password -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/activity_login_email_wraper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_login_password_wraper"
+        >
+        <EditText
+            android:id="@+id/activity_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:inputType="textEmailAddress"
+            android:hint="@string/login_password"
             android:nextFocusDown="@+id/activity_register_device_button_send"
             android:nextFocusUp="@id/activity_register_device_label"
             />
@@ -55,7 +75,7 @@
         android:focusable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/activity_login_password_wraper"
+        android:layout_below="@id/activity_login_email_wraper"
         android:layout_centerHorizontal="true"
         android:nextFocusDown="@id/activity_login_button_send"
         android:nextFocusUp="@id/activity_login_username"
