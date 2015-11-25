@@ -16,18 +16,12 @@ import eu.dubedout.devicecounter.presenter.LoginActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
 
 public class LoginActivity extends AppCompatActivity implements LoginActivityViewable {
-    @Bind(R.id.activity_display_toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.activity_login_username)
-    EditText activityLoginUsername;
-    @Bind(R.id.activity_login_username_wrapper)
-    TextInputLayout activityLoginUsernameWraper;
-    @Bind(R.id.activity_login_password)
-    EditText activityLoginPassword;
-    @Bind(R.id.activity_login_password_wrapper)
-    TextInputLayout activityLoginPasswordWraper;
-    @Bind(R.id.activity_login_button_send)
-    Button activityLoginButtonSend;
+    @Bind(R.id.activity_display_toolbar) Toolbar toolbar;
+    @Bind(R.id.activity_login_username) EditText activityLoginUsername;
+    @Bind(R.id.activity_login_username_wrapper) TextInputLayout activityLoginUsernameWraper;
+    @Bind(R.id.activity_login_password) EditText activityLoginPassword;
+    @Bind(R.id.activity_login_password_wrapper) TextInputLayout activityLoginPasswordWraper;
+    @Bind(R.id.activity_login_button_send) Button activityLoginButtonSend;
 
     private LoginActivityPresenter presenter;
 
