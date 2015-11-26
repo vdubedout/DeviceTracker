@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -33,12 +35,40 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // TODO: VincentD 15-11-22 remove up button, everything should be disabled when the user is not logged in
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         presenter = new LoginActivityPresenter(this, new UserClientImpl());
         presenter.onCreate(savedInstanceState);
+
+        initializeViews();
     }
 
+    private void initializeViews() {
+        activityLoginUsername.setOnKeyListener(new OnTextChangeButtonActivationCheck());
+        activityLoginPassword.setOnKeyListener(new OnTextChangeButtonActivationCheck());
+
+        activityLoginButtonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onLoginButtonClick(
+                        activityLoginUsername.getText().toString(),
+                        activityLoginPassword.getText().toString());
+            }
+        });
+    }
+    private class OnTextChangeButtonActivationCheck implements View.OnKeyListener {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if ( (!activityLoginUsername.getText().toString().equalsIgnoreCase("")) &&
+                    (!activityLoginPassword.getText().toString().equalsIgnoreCase(""))) {
+                activityLoginButtonSend.setEnabled(true);
+            }else {
+                activityLoginButtonSend.setEnabled(false);
+            }
+            return false;
+        }
+    }
+    
     @OnClick(R.id.activity_login_button_send)
     void onLoginButtonClick() {
         presenter.onLoginButtonClick(
