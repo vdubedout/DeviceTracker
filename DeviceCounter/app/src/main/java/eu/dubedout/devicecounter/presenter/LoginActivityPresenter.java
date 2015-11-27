@@ -3,15 +3,13 @@ package eu.dubedout.devicecounter.presenter;
 import android.os.Bundle;
 
 import com.orhanobut.logger.Logger;
-import android.content.Intent;
-import eu.dubedout.devicecounter.BuildConfig;
-import eu.dubedout.devicecounter.activity.MainActivity;
-import eu.dubedout.devicecounter.client.UserClient;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
-import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
-import eu.dubedout.devicecounter.helper.StringHelper;
 
-import static android.support.v4.app.ActivityCompat.startActivity;
+import eu.dubedout.devicecounter.BuildConfig;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.client.UserClient;
+import eu.dubedout.devicecounter.helper.StringHelper;
+import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
+
 import static eu.dubedout.devicecounter.helper.StringHelper.isEmpty;
 
 public class LoginActivityPresenter {

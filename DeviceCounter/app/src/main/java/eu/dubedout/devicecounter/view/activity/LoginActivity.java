@@ -1,5 +1,6 @@
 package eu.dubedout.devicecounter.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,14 +9,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.content.Intent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import eu.dubedout.devicecounter.R;
+import eu.dubedout.devicecounter.architecture.Const;
 import eu.dubedout.devicecounter.client.UserClientImpl;
-import eu.dubedout.devicecounter.helper.Const;
 import eu.dubedout.devicecounter.presenter.LoginActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
 
