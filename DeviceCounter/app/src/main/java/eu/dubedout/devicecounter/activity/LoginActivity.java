@@ -56,15 +56,28 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
             }
         });
     }
+
+    @Override
+    public void launchMainActivityForResult() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void activateLoginButtonClick() {
+        activityLoginButtonSend.setEnabled(true);
+    }
+
+    @Override
+    public void deactivateLoginButtonClick() {
+        activityLoginButtonSend.setEnabled(false);
+    }
+
     private class OnTextChangeButtonActivationCheck implements View.OnKeyListener {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if ( (!activityLoginUsername.getText().toString().equalsIgnoreCase("")) &&
-                    (!activityLoginPassword.getText().toString().equalsIgnoreCase(""))) {
-                activityLoginButtonSend.setEnabled(true);
-            }else {
-                activityLoginButtonSend.setEnabled(false);
-            }
+            presenter.verifyButtonState(activityLoginUsername.getText().toString(),
+                    activityLoginPassword.getText().toString());
             return false;
         }
     }
