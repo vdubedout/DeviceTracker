@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.helper;
+package eu.dubedout.devicecounter.architecture;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

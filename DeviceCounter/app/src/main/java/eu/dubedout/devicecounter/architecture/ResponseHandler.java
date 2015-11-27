@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.helper;
+package eu.dubedout.devicecounter.architecture;
 
 public interface ResponseHandler {
     void onSuccess();

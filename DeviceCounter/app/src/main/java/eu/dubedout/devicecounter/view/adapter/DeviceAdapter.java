@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.adapter;
+package eu.dubedout.devicecounter.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 
 import eu.dubedout.devicecounter.R;
-import eu.dubedout.devicecounter.bo.Device;
+import eu.dubedout.devicecounter.business.bo.Device;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder> {
     private List<Device> deviceList;

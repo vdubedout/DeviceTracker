@@ -1,12 +1,13 @@
-package eu.dubedout.devicecounter.helper;
+package eu.dubedout.devicecounter.business;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import eu.dubedout.devicecounter.bo.Device;
+import eu.dubedout.devicecounter.business.bo.Device;
+import eu.dubedout.devicecounter.helper.StringHelper;
 
 // TODO: VincentD 15-10-20 register in ServiceRegistryImpl
-public class PreferencesHelper {
+public class PreferencesService {
     private static final String DEVICE_PREF_NAME = "device";
     private static final String PREF_DEVICE_IDENTIFIER = "device_identifier";
     private static final String PREF_DEVICE_MODEL = "device_model";
@@ -15,7 +16,7 @@ public class PreferencesHelper {
 
     private Context context;
 
-    public PreferencesHelper(Context context) {
+    public PreferencesService(Context context) {
         this.context = context;
     }
 
