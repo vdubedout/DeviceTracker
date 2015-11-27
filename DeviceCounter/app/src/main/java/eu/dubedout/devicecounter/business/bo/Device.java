@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.bo;
+package eu.dubedout.devicecounter.business.bo;
 
 import java.util.Date;
 

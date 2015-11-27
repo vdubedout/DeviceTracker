@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.activity;
+package eu.dubedout.devicecounter.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;

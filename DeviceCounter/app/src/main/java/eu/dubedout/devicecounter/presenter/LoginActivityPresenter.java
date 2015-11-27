@@ -7,7 +7,7 @@ import android.content.Intent;
 import eu.dubedout.devicecounter.BuildConfig;
 import eu.dubedout.devicecounter.activity.MainActivity;
 import eu.dubedout.devicecounter.client.UserClient;
-import eu.dubedout.devicecounter.helper.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
 import eu.dubedout.devicecounter.helper.StringHelper;
 

@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.helper;
+package eu.dubedout.devicecounter.architecture;
 
 public class Const {
     public static class ForResult {

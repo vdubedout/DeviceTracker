@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.bo;
+package eu.dubedout.devicecounter.business.bo;
 
 public class User {
     public String username;

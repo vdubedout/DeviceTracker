@@ -1,6 +1,6 @@
 package eu.dubedout.devicecounter.client;
 
-import eu.dubedout.devicecounter.helper.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
 
 public interface UserClient {
     void login(String username, String password, ResponseCallback responseCallback);

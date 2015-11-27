@@ -1,6 +1,6 @@
 package eu.dubedout.devicecounter.client;
 
-import eu.dubedout.devicecounter.helper.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
 
 public class UserClientImpl implements UserClient {
     @Override

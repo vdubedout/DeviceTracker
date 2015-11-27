@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.client.DeviceClientImpl;
-import eu.dubedout.devicecounter.helper.PreferencesHelper;
-import eu.dubedout.devicecounter.helper.ServiceRegistryImpl;
+import eu.dubedout.devicecounter.business.PreferencesService;
+import eu.dubedout.devicecounter.architecture.ServiceRegistryImpl;
 
 public class App extends Application {
     private static final String PARSE_APPLICATION_ID = "eOjAfYckkkxD31cKbNeOIiGDBvGsaqGWWD5wlqyq";
@@ -31,9 +31,9 @@ public class App extends Application {
         serviceRegistry = new ServiceRegistryImpl();
 
         HashMap<Class, Object> map = new HashMap<>();
-        PreferencesHelper preferencesHelper = new PreferencesHelper(this);
-        map.put(PreferencesHelper.class, preferencesHelper);
-        map.put(DeviceClient.class, new DeviceClientImpl(preferencesHelper));
+        PreferencesService preferencesService = new PreferencesService(this);
+        map.put(PreferencesService.class, preferencesService);
+        map.put(DeviceClient.class, new DeviceClientImpl(preferencesService));
         serviceRegistry.create(map);
     }
 
