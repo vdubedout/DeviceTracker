@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.architecture;
+package eu.dubedout.devicecounter.architecture.serviceregistry;
 
 public interface ServiceRegistry {
 //    void add(Class clazz, Object object);

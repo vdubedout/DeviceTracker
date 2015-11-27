@@ -1,19 +1,22 @@
 package eu.dubedout.devicecounter;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.parse.Parse;
 
 import java.util.HashMap;
 
+import dagger.Provides;
+import eu.dubedout.devicecounter.architecture.serviceregistry.ServiceRegistryImpl;
+import eu.dubedout.devicecounter.business.PreferencesService;
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.client.DeviceClientImpl;
-import eu.dubedout.devicecounter.business.PreferencesService;
-import eu.dubedout.devicecounter.architecture.ServiceRegistryImpl;
 
 public class App extends Application {
     private static final String PARSE_APPLICATION_ID = "eOjAfYckkkxD31cKbNeOIiGDBvGsaqGWWD5wlqyq";
     private static final String PARSE_APPLICATION_KEY = "HkHLLkd0Hb7yVwhjBFKZYi1979y0qVk8xq7jAbzb";
+
     private static ServiceRegistryImpl serviceRegistry;
 
     @Override
@@ -43,6 +46,11 @@ public class App extends Application {
 
     public static <T> T getInstance(Class<T> clazz) {
         return getServiceRegistry().getInstance(clazz);
+    }
+
+    @Provides
+    Context provideApplicationContext() {
+        return this;
     }
 
 
