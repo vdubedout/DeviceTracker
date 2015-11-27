@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
@@ -61,15 +63,18 @@ public class MainActivityPresenter {
         // TODO: VincentD 15-11-10 display error popup, send back to registering device
     }
 
+    @Inject PreferencesService preferencesService;
     public boolean isDeviceRegistered() {
-        return !App.getInstance(PreferencesService.class)
-                .getDeviceRegistered()
-                .isEmpty();
+        return !preferencesService.getDeviceRegistered().isEmpty();
+
+//        return !App.getInstance(PreferencesService.class)
+//                .getDeviceRegistered()
+//                .isEmpty();
     }
 
     public void sendNewUser(String newUserName) {
         if (!StringHelper.isEmpty(newUserName)) {
-            Device device = App.getInstance(PreferencesService.class).getDeviceRegistered();
+            Device device = preferencesService.getDeviceRegistered();
             device.setUser(newUserName);
             App.getInstance(DeviceClient.class).setNewUser(device, new SetNewUserResponseHandler());
         }
