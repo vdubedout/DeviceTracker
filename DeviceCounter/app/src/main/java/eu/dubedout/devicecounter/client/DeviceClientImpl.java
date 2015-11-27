@@ -9,10 +9,10 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.dubedout.devicecounter.bo.Device;
-import eu.dubedout.devicecounter.helper.PreferencesHelper;
-import eu.dubedout.devicecounter.helper.ResponseCallback;
-import eu.dubedout.devicecounter.helper.ResponseHandler;
+import eu.dubedout.devicecounter.business.bo.Device;
+import eu.dubedout.devicecounter.business.PreferencesService;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseHandler;
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class DeviceClientImpl implements DeviceClient {
@@ -22,11 +22,11 @@ public class DeviceClientImpl implements DeviceClient {
     private static final String PARSE_DEVICE_CURRENT_USER = "currentUser";
     private static final String PARSE_DEVICE_REGISTERED_BY = "registeredBy";
     private String deviceObjectId;
-    private PreferencesHelper preferencesHelper;
+    private PreferencesService preferencesService;
 
-    public DeviceClientImpl(PreferencesHelper preferencesHelper) {
-        this.preferencesHelper = preferencesHelper;
-        deviceObjectId = preferencesHelper.getParseDeviceId();
+    public DeviceClientImpl(PreferencesService preferencesService) {
+        this.preferencesService = preferencesService;
+        deviceObjectId = preferencesService.getParseDeviceId();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class DeviceClientImpl implements DeviceClient {
     private void saveDeviceObjectId(String deviceObjectId) {
         if (StringHelper.isEmpty(this.deviceObjectId)) {
             this.deviceObjectId = deviceObjectId;
-            preferencesHelper.registerParseDeviceId(deviceObjectId);
+            preferencesService.registerParseDeviceId(deviceObjectId);
         }
     }
 

@@ -2,7 +2,7 @@ package eu.dubedout.devicecounter.presenter.viewable;
 
 import java.util.List;
 
-import eu.dubedout.devicecounter.bo.Device;
+import eu.dubedout.devicecounter.business.bo.Device;
 
 public interface MainActivityViewable {
 

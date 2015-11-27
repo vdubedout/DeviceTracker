@@ -1,8 +1,8 @@
-package eu.dubedout.devicecounter.activity;
+package eu.dubedout.devicecounter.presenter.viewable;
 
 public interface RegisterDeviceViewable {
-    void launchMainActivityForResult();
 
+    void launchMainActivityForResult();
     void activateButtonClick();
     void deactivateButtonClick();
 
