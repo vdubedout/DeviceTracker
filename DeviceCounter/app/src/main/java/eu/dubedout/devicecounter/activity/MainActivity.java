@@ -51,11 +51,15 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        Intent login = new Intent(this,LoginActivity.class);
+        startActivityForResult(login, Const.ForResult.LOGIN_USER);
+
         initializeToolbar();
         initializeViews();
 
         presenter = new MainActivityPresenter(this);
         presenter.onCreate(savedInstanceState);
+
     }
 
     private void initializeToolbar() {
@@ -71,11 +75,22 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Const.ForResult.REGISTER_DEVICE) {
-            if (resultCode == RESULT_OK) {
-                presenter.onSuccessRegisteringDevice();
-            } else {
-                presenter.onFailedRegisteringDevice();
+
+        switch (requestCode) {
+            case (Const.ForResult.REGISTER_DEVICE) : {
+                if (resultCode == RESULT_OK) {
+                    presenter.onSuccessRegisteringDevice();
+                } else {
+                    presenter.onFailedRegisteringDevice();
+                }
+                break;
+            }
+            case (Const.ForResult.LOGIN_USER) : {
+                if (resultCode == RESULT_OK) {
+                    String username = data.getStringExtra(Const.StringIdentifier.USERNAME);
+                } else {
+                }
+                break;
             }
         }
     }
@@ -88,10 +103,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;

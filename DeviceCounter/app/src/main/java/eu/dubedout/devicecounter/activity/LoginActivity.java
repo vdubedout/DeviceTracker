@@ -8,12 +8,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.content.Intent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import eu.dubedout.devicecounter.R;
 import eu.dubedout.devicecounter.client.UserClientImpl;
+import eu.dubedout.devicecounter.helper.Const;
 import eu.dubedout.devicecounter.presenter.LoginActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
 
@@ -59,7 +61,10 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
     @Override
     public void launchMainActivityForResult() {
-        setResult(RESULT_OK);
+        Intent resultIntent = getIntent();
+        resultIntent.putExtra(Const.StringIdentifier.USERNAME,
+                activityLoginUsername.getText().toString());
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 
