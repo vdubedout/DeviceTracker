@@ -78,6 +78,11 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         activityLoginButtonSend.setEnabled(false);
     }
 
+    @Override
+    public void displayErrorUserDoesNotExist() {
+        
+    }
+
     private class OnTextChangeButtonActivationCheck implements View.OnKeyListener {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {

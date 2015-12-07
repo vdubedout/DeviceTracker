@@ -4,4 +4,5 @@ public interface LoginActivityViewable {
     void launchMainActivityForResult();
     void activateLoginButtonClick();
     void deactivateLoginButtonClick();
+    void displayErrorUserDoesNotExist();
 }

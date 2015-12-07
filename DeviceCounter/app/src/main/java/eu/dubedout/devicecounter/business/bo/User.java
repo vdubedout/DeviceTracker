@@ -1,7 +1,10 @@
 package eu.dubedout.devicecounter.business.bo;
 
-public class User {
-    public String username;
-    public String password;
-    public String email;
+public interface User {
+
+    String getUsername();
+    void setUsername(String username);
+
+    String getEmail();
+    void setEmail(String email);
 }

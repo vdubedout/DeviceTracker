@@ -5,7 +5,9 @@ import android.os.Bundle;
 import com.orhanobut.logger.Logger;
 
 import eu.dubedout.devicecounter.BuildConfig;
+import eu.dubedout.devicecounter.architecture.Exception.UserDoesNotExistException;
 import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.business.bo.User;
 import eu.dubedout.devicecounter.client.UserClient;
 import eu.dubedout.devicecounter.helper.StringHelper;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
@@ -35,9 +37,9 @@ public class LoginActivityPresenter {
     }
     public void onLoginButtonClick(String username, String password) {
         if (!isEmpty(username) && !isEmpty(password)) {
-            userClient.login(username, password, new ResponseCallback() {
+            userClient.login(username, password, new ResponseCallback<User>() {
                 @Override
-                public void onSuccess(Object object) {
+                public void onSuccess(User user) {
                     if (BuildConfig.DEBUG) {
                         Logger.e("Always return successfully response, implement client");
                     }
@@ -46,7 +48,9 @@ public class LoginActivityPresenter {
 
                 @Override
                 public void onFailure(Throwable throwable) {
-                    // TODO: VincentD 15-11-24 display error
+                    if (throwable instanceof UserDoesNotExistException) {
+                        viewable.displayErrorUserDoesNotExist();
+                    }
                 }
             });
         }
