@@ -8,4 +8,5 @@ public interface LoginActivityViewable {
     void displaySignUpForm();
 
     void displayErrorRegisteringEmailAlreadyExist();
+    void displayGenericError(String message);
 }

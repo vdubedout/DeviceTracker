@@ -26,10 +26,11 @@ public class UserClientImpl implements UserClient {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     responseCallback.onSuccess(new UserParsedSpecific(user));
-                } else if(userDoesNotExist(e)) {
+                } else if (userDoesNotExist(e)) {
                     responseCallback.onFailure(new UserDoesNotExistException(e.getMessage()));
+                } else { // Generic error // TODO: VincentD 15-12-07 handle more specific errors
+                    responseCallback.onFailure(new Throwable(e.getMessage()));
                 }
-                // TODO: VincentD 15-12-07 handle wrong password
             }
         };
     }
@@ -50,8 +51,10 @@ public class UserClientImpl implements UserClient {
                 if (e == null) {
                     responseCallback.onSuccess(new UserParsedSpecific(parseUser));
                 } else if (e.getCode() == ParseException.EMAIL_TAKEN
-                        || e.getCode() == ParseException.USERNAME_TAKEN){
+                        || e.getCode() == ParseException.USERNAME_TAKEN) {
                     responseCallback.onFailure(new UsernameAlreadyTaken(e.getMessage()));
+                } else { // Generic Error // TODO: VincentD 15-12-07 handle more specific errors
+                    responseCallback.onFailure(new Throwable(e.getMessage()));
                 }
             }
         });

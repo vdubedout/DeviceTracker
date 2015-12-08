@@ -60,6 +60,8 @@ public class LoginActivityPresenter {
             public void onFailure(Throwable throwable) {
                 if (throwable instanceof UserDoesNotExistException) {
                     viewable.displayErrorUserDoesNotExist();
+                } else {
+                    viewable.displayGenericError(throwable.getMessage());
                 }
             }
         };

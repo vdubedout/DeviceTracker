@@ -2,7 +2,6 @@ package eu.dubedout.devicecounter.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
     @Override
     public void displayErrorUserDoesNotExist() {
-        showSnackBarError(R.string.email_not_registered);
+        showSnackBarError(getString(R.string.email_not_registered));
     }
 
     @Override
@@ -96,11 +95,16 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
     @Override
     public void displayErrorRegisteringEmailAlreadyExist() {
-        showSnackBarError(R.string.email_already_registered);
+        showSnackBarError(getString(R.string.email_already_registered));
     }
 
-    private void showSnackBarError(@StringRes int string) {
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, string, Snackbar.LENGTH_LONG);
+    @Override
+    public void displayGenericError(String message) {
+        showSnackBarError(message);
+    }
+
+    private void showSnackBarError(String message) {
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_LONG);
         snackbar.getView().setBackgroundColor(getResources().getColor(R.color.snackbar_error));
         snackbar.show();
     }
