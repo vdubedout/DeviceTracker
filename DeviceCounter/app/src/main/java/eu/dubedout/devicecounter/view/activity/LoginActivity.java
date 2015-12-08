@@ -87,10 +87,15 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     }
 
     @Override
-    public void displaySignUpForm() {
-        // TODO: VincentD 15-12-07 animate
-        activityLoginButtonSend.setText(getString(R.string.create_account));
+    public void displayRegisteringForm() {
+        activityLoginButtonSend.setText(getString(R.string.action_create_account));
         activityLoginButtonNoAccount.setText(getString(R.string.already_an_account_login));
+    }
+
+    @Override
+    public void displaySignInForm() {
+        activityLoginButtonSend.setText(R.string.action_login);
+        activityLoginButtonNoAccount.setText(R.string.no_account_create_it);
     }
 
     @Override

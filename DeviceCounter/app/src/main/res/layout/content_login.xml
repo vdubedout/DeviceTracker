@@ -63,7 +63,7 @@
         android:layout_below="@id/activity_login_password_wrapper"
         android:layout_centerHorizontal="true"
         android:nextFocusDown="@id/activity_login_button_send"
-        android:text="@string/button_login"
+        android:text="@string/action_login"
         android:enabled="false"/>
 
     <!-- User does not have any account -->

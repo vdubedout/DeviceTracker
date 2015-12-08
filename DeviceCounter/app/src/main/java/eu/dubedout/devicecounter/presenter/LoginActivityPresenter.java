@@ -85,8 +85,10 @@ public class LoginActivityPresenter {
 
     public void onSwapRegisteringAndSignIn() {
         isLoginMode = !isLoginMode;
-        viewable.displaySignUpForm();
+        if (isLoginMode) {
+            viewable.displaySignInForm();
+        } else {
+            viewable.displayRegisteringForm();
+        }
     }
-
-
 }
