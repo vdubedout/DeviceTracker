@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- WIDGETS -->
+    <style name="Widget.App.Borderless.Small" parent="@android:style/Widget.DeviceDefault.Button.Borderless.Small"/>
+</resources>

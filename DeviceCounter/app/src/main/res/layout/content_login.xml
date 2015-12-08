@@ -31,12 +31,34 @@
             />
     </android.support.design.widget.TextInputLayout>
 
+    <!-- email -->
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/activity_login_email_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_login_username_wrapper"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
+        <EditText
+            android:id="@+id/activity_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:hint="@string/login_email"
+            android:inputType="textEmailAddress"
+            android:nextFocusDown="@+id/activity_register_device_button_send"
+            android:nextFocusUp="@id/activity_register_device_label"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+
     <!-- Password -->
     <android.support.design.widget.TextInputLayout
         android:id="@+id/activity_login_password_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/activity_login_username_wrapper"
+        android:layout_below="@id/activity_login_email_wrapper"
         >
         <EditText
             android:id="@+id/activity_login_password"
@@ -50,6 +72,8 @@
             />
     </android.support.design.widget.TextInputLayout>
 
+
+
     <!--ok button-->
     <Button
         android:id="@+id/activity_login_button_send"
@@ -62,5 +86,19 @@
         android:nextFocusUp="@id/activity_login_username"
         android:text="@string/button_login"
         android:enabled="false"/>
+
+    <!-- User does not have any account -->
+    <Button
+        android:id="@+id/activity_login_button_no_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/activity_login_button_send"
+        android:layout_centerHorizontal="true"
+        android:nextFocusDown="@id/activity_login_button_send"
+        android:nextFocusUp="@id/activity_login_username"
+        style="@style/Widget.App.Borderless.Small"
+        android:text="@string/button_no_account"
+        />
+
 
 </RelativeLayout>

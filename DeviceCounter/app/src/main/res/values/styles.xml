@@ -14,7 +14,10 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <!-- WIDGETS -->
+    <style name="Widget.App.Borderless.Small" parent="@android:style/Widget.Button.Small"/>
 
 </resources>

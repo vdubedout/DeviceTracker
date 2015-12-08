@@ -5,4 +5,5 @@ public interface LoginActivityViewable {
     void activateLoginButtonClick();
     void deactivateLoginButtonClick();
     void displayErrorUserDoesNotExist();
+    void displaySignUpForm();
 }

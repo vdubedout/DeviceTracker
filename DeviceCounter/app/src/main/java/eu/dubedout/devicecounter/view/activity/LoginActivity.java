@@ -22,10 +22,13 @@ import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
 public class LoginActivity extends AppCompatActivity implements LoginActivityViewable {
     @Bind(R.id.activity_display_toolbar) Toolbar toolbar;
     @Bind(R.id.activity_login_username) EditText activityLoginUsername;
-    @Bind(R.id.activity_login_username_wrapper) TextInputLayout activityLoginUsernameWraper;
+    @Bind(R.id.activity_login_username_wrapper) TextInputLayout activityLoginUsernameWrapper;
+    @Bind(R.id.activity_login_email) EditText activityLoginEmail;
+    @Bind(R.id.activity_login_email_wrapper) EditText activityLoginEmailWrapper;
     @Bind(R.id.activity_login_password) EditText activityLoginPassword;
-    @Bind(R.id.activity_login_password_wrapper) TextInputLayout activityLoginPasswordWraper;
+    @Bind(R.id.activity_login_password_wrapper) TextInputLayout activityLoginPasswordWrapper;
     @Bind(R.id.activity_login_button_send) Button activityLoginButtonSend;
+    @Bind(R.id.activity_login_button_no_account) Button activityLoginButtonNoAccount;
 
     private LoginActivityPresenter presenter;
 
@@ -80,7 +83,12 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
     @Override
     public void displayErrorUserDoesNotExist() {
-        
+
+    }
+
+    @Override
+    public void displaySignUpForm() {
+
     }
 
     private class OnTextChangeButtonActivationCheck implements View.OnKeyListener {
@@ -97,6 +105,11 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         presenter.onLoginButtonClick(
                 activityLoginUsername.getText().toString(),
                 activityLoginPassword.getText().toString());
+    }
+
+    @OnClick(R.id.activity_login_button_no_account)
+    void onNoAccountClick() {
+        presenter.onNoAccountButtonClick();
     }
 
 }

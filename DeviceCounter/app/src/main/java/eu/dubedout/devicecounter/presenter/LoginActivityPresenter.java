@@ -55,4 +55,8 @@ public class LoginActivityPresenter {
             });
         }
     }
+
+    public void onNoAccountButtonClick() {
+        viewable.displaySignUpForm();
+    }
 }
