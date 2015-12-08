@@ -6,4 +6,6 @@ public interface LoginActivityViewable {
     void deactivateLoginButtonClick();
     void displayErrorUserDoesNotExist();
     void displaySignUpForm();
+
+    void displayErrorRegisteringEmailAlreadyExist();
 }

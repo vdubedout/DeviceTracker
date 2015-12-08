@@ -4,7 +4,7 @@ import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.business.bo.User;
 
 public interface UserClient {
-    void login(String username, String password, ResponseCallback<User> responseCallback);
+    void login(String email, String password, ResponseCallback<User> responseCallback);
 
-    void signUp(String username, String password, String email, ResponseCallback responseCallback);
+    void signUp(String email, String password, ResponseCallback<User> responseCallback);
 }

@@ -2,6 +2,9 @@ package eu.dubedout.devicecounter.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,9 +23,8 @@ import eu.dubedout.devicecounter.presenter.LoginActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
 
 public class LoginActivity extends AppCompatActivity implements LoginActivityViewable {
+    @Bind(R.id.activity_login_coordinator) CoordinatorLayout coordinatorLayout;
     @Bind(R.id.activity_display_toolbar) Toolbar toolbar;
-    @Bind(R.id.activity_login_username) EditText activityLoginUsername;
-    @Bind(R.id.activity_login_username_wrapper) TextInputLayout activityLoginUsernameWrapper;
     @Bind(R.id.activity_login_email) EditText activityLoginEmail;
     @Bind(R.id.activity_login_email_wrapper) TextInputLayout activityLoginEmailWrapper;
     @Bind(R.id.activity_login_password) EditText activityLoginPassword;
@@ -49,14 +51,14 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     }
 
     private void initializeViews() {
-        activityLoginUsername.setOnKeyListener(new OnTextChangeButtonActivationCheck());
+        activityLoginEmail.setOnKeyListener(new OnTextChangeButtonActivationCheck());
         activityLoginPassword.setOnKeyListener(new OnTextChangeButtonActivationCheck());
 
         activityLoginButtonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onLoginButtonClick(
-                        activityLoginUsername.getText().toString(),
+                presenter.onSendButtonClick(
+                        activityLoginEmail.getText().toString(),
                         activityLoginPassword.getText().toString());
             }
         });
@@ -65,8 +67,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     @Override
     public void launchMainActivityForResult() {
         Intent resultIntent = getIntent();
-        resultIntent.putExtra(Const.StringIdentifier.USERNAME,
-                activityLoginUsername.getText().toString());
+        resultIntent.putExtra(Const.StringIdentifier.USERNAME, activityLoginEmail.getText().toString());
         setResult(RESULT_OK, resultIntent);
         finish();
     }
@@ -83,21 +84,31 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
     @Override
     public void displayErrorUserDoesNotExist() {
-
+        showSnackBarError(R.string.email_not_registered);
     }
 
     @Override
     public void displaySignUpForm() {
         // TODO: VincentD 15-12-07 animate
-        activityLoginEmailWrapper.setVisibility(View.VISIBLE);
         activityLoginButtonSend.setText(getString(R.string.create_account));
         activityLoginButtonNoAccount.setText(getString(R.string.already_an_account_login));
+    }
+
+    @Override
+    public void displayErrorRegisteringEmailAlreadyExist() {
+        showSnackBarError(R.string.email_already_registered);
+    }
+
+    private void showSnackBarError(@StringRes int string) {
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, string, Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.snackbar_error));
+        snackbar.show();
     }
 
     private class OnTextChangeButtonActivationCheck implements View.OnKeyListener {
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
-            presenter.verifyButtonState(activityLoginUsername.getText().toString(),
+            presenter.verifyButtonState(activityLoginEmail.getText().toString(),
                     activityLoginPassword.getText().toString());
             return false;
         }
@@ -105,14 +116,14 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     
     @OnClick(R.id.activity_login_button_send)
     void onSendButtonClick() {
-        presenter.onLoginButtonClick(
-                activityLoginUsername.getText().toString(),
+        presenter.onSendButtonClick(
+                activityLoginEmail.getText().toString(),
                 activityLoginPassword.getText().toString());
     }
 
     @OnClick(R.id.activity_login_button_swap_mode)
     void onSwapRegisteringAndSignIn() {
-        presenter.onNoAccountButtonClick();
+        presenter.onSwapRegisteringAndSignIn();
     }
 
 }
