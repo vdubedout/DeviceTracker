@@ -89,7 +89,7 @@
 
     <!-- User does not have any account -->
     <Button
-        android:id="@+id/activity_login_button_no_account"
+        android:id="@+id/activity_login_button_swap_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_login_button_send"
@@ -97,7 +97,7 @@
         android:nextFocusDown="@id/activity_login_button_send"
         android:nextFocusUp="@id/activity_login_username"
         style="@style/Widget.App.Borderless.Small"
-        android:text="@string/button_no_account"
+        android:text="@string/no_account_create_it"
         />
 
 

@@ -13,6 +13,8 @@
     <string name="register_new_model">Device Model</string>
     <string name="new_user_sent_success">User Sent Sucessfully</string>
     <string name="title_activity_display_login">User Login</string>
-    <string name="button_no_account">No account yet? Create one</string>
+    <string name="no_account_create_it">No account yet? Create one</string>
     <string name="login_email">Email</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_an_account_login">Already an account? Login</string>
 </resources>

@@ -24,11 +24,11 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     @Bind(R.id.activity_login_username) EditText activityLoginUsername;
     @Bind(R.id.activity_login_username_wrapper) TextInputLayout activityLoginUsernameWrapper;
     @Bind(R.id.activity_login_email) EditText activityLoginEmail;
-    @Bind(R.id.activity_login_email_wrapper) EditText activityLoginEmailWrapper;
+    @Bind(R.id.activity_login_email_wrapper) TextInputLayout activityLoginEmailWrapper;
     @Bind(R.id.activity_login_password) EditText activityLoginPassword;
     @Bind(R.id.activity_login_password_wrapper) TextInputLayout activityLoginPasswordWrapper;
     @Bind(R.id.activity_login_button_send) Button activityLoginButtonSend;
-    @Bind(R.id.activity_login_button_no_account) Button activityLoginButtonNoAccount;
+    @Bind(R.id.activity_login_button_swap_mode) Button activityLoginButtonNoAccount;
 
     private LoginActivityPresenter presenter;
 
@@ -88,7 +88,10 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
     @Override
     public void displaySignUpForm() {
-
+        // TODO: VincentD 15-12-07 animate
+        activityLoginEmailWrapper.setVisibility(View.VISIBLE);
+        activityLoginButtonSend.setText(getString(R.string.create_account));
+        activityLoginButtonNoAccount.setText(getString(R.string.already_an_account_login));
     }
 
     private class OnTextChangeButtonActivationCheck implements View.OnKeyListener {
@@ -101,14 +104,14 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     }
     
     @OnClick(R.id.activity_login_button_send)
-    void onLoginButtonClick() {
+    void onSendButtonClick() {
         presenter.onLoginButtonClick(
                 activityLoginUsername.getText().toString(),
                 activityLoginPassword.getText().toString());
     }
 
-    @OnClick(R.id.activity_login_button_no_account)
-    void onNoAccountClick() {
+    @OnClick(R.id.activity_login_button_swap_mode)
+    void onSwapRegisteringAndSignIn() {
         presenter.onNoAccountButtonClick();
     }
 
