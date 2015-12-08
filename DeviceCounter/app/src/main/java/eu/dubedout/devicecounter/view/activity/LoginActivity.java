@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         presenter = new LoginActivityPresenter(this, new UserClientImpl());
         presenter.onCreate(savedInstanceState);
