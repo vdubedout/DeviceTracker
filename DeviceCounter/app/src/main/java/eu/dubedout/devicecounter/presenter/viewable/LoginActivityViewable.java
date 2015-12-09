@@ -9,8 +9,6 @@ public interface LoginActivityViewable {
     void displayErrorUserDoesNotExist();
     void displayRegisteringForm();
     void displaySignInForm();
-
     void displayErrorRegisteringEmailAlreadyExist();
-
     void displayGenericError(String message);
 }
