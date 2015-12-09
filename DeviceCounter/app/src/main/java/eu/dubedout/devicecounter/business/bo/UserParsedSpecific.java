@@ -1,14 +1,14 @@
 package eu.dubedout.devicecounter.business.bo;
 
+import android.os.Parcel;
+
 import com.parse.ParseUser;
 
 public class UserParsedSpecific implements User {
     private String username;
     private String email;
-    private ParseUser parseUser;
 
     public UserParsedSpecific(ParseUser parseUser) {
-        this.parseUser = parseUser;
         this.username = parseUser.getUsername();
         this.email = parseUser.getEmail();
     }
@@ -32,4 +32,30 @@ public class UserParsedSpecific implements User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.username);
+        dest.writeString(this.email);
+    }
+
+    protected UserParsedSpecific(Parcel in) {
+        this.username = in.readString();
+        this.email = in.readString();
+    }
+
+    public static final Creator<UserParsedSpecific> CREATOR = new Creator<UserParsedSpecific>() {
+        public UserParsedSpecific createFromParcel(Parcel source) {
+            return new UserParsedSpecific(source);
+        }
+
+        public UserParsedSpecific[] newArray(int size) {
+            return new UserParsedSpecific[size];
+        }
+    };
 }

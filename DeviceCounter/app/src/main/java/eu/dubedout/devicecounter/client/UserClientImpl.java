@@ -9,27 +9,27 @@ import com.parse.SignUpCallback;
 
 import eu.dubedout.devicecounter.architecture.Exception.UserDoesNotExistException;
 import eu.dubedout.devicecounter.architecture.Exception.UsernameAlreadyTaken;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseHandler;
 import eu.dubedout.devicecounter.business.bo.User;
 import eu.dubedout.devicecounter.business.bo.UserParsedSpecific;
 
 public class UserClientImpl implements UserClient {
     @Override
-    public void login(String email, String password, ResponseCallback<User> responseCallback) {
-        ParseUser.logInInBackground(email, password, logInCallback(responseCallback));
+    public void login(String email, String password, ResponseHandler<User> responseHandler) {
+        ParseUser.logInInBackground(email, password, logInCallback(responseHandler));
     }
 
     @NonNull
-    private LogInCallback logInCallback(final ResponseCallback<User> responseCallback) {
+    private LogInCallback logInCallback(final ResponseHandler<User> responseHandler) {
         return new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    responseCallback.onSuccess(new UserParsedSpecific(user));
+                    responseHandler.onSuccess(new UserParsedSpecific(user));
                 } else if (userDoesNotExist(e)) {
-                    responseCallback.onFailure(new UserDoesNotExistException(e.getMessage()));
+                    responseHandler.onFailure(new UserDoesNotExistException(e.getMessage()));
                 } else { // Generic error // TODO: VincentD 15-12-07 handle more specific errors
-                    responseCallback.onFailure(new Throwable(e.getMessage()));
+                    responseHandler.onFailure(new Throwable(e.getMessage()));
                 }
             }
         };
@@ -40,7 +40,7 @@ public class UserClientImpl implements UserClient {
     }
 
     @Override
-    public void signUp(String email, String password, final ResponseCallback<User> responseCallback) {
+    public void signUp(String email, String password, final ResponseHandler<User> responseHandler) {
         final ParseUser parseUser = new ParseUser();
         parseUser.setUsername(email);
         parseUser.setEmail(email);
@@ -49,12 +49,12 @@ public class UserClientImpl implements UserClient {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    responseCallback.onSuccess(new UserParsedSpecific(parseUser));
+                    responseHandler.onSuccess(new UserParsedSpecific(parseUser));
                 } else if (e.getCode() == ParseException.EMAIL_TAKEN
                         || e.getCode() == ParseException.USERNAME_TAKEN) {
-                    responseCallback.onFailure(new UsernameAlreadyTaken(e.getMessage()));
+                    responseHandler.onFailure(new UsernameAlreadyTaken(e.getMessage()));
                 } else { // Generic Error // TODO: VincentD 15-12-07 handle more specific errors
-                    responseCallback.onFailure(new Throwable(e.getMessage()));
+                    responseHandler.onFailure(new Throwable(e.getMessage()));
                 }
             }
         });

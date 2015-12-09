@@ -1,7 +1,9 @@
 package eu.dubedout.devicecounter.presenter.viewable;
 
+import eu.dubedout.devicecounter.business.bo.User;
+
 public interface LoginActivityViewable {
-    void launchMainActivityForResult();
+    void launchMainActivity(User user);
     void activateLoginButtonClick();
     void deactivateLoginButtonClick();
     void displayErrorUserDoesNotExist();

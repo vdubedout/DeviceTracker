@@ -8,8 +8,8 @@ import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.business.PreferencesService;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.architecture.ResponseHandler;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.helper.StringHelper;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
@@ -38,7 +38,7 @@ public class MainActivityPresenter {
 
     private void loadDeviceList() {
         App.getInstance(DeviceClient.class)
-            .getDevices(new ResponseCallback<List<Device>>() {
+            .getDevices(new ResponseHandler<List<Device>>() {
                 @Override
                 public void onSuccess(List<Device> deviceList) {
                     viewable.loadDevicesList(deviceList);
@@ -71,13 +71,13 @@ public class MainActivityPresenter {
         if (!StringHelper.isEmpty(newUserName)) {
             Device device = App.getInstance(PreferencesService.class).getDeviceRegistered();
             device.setUser(newUserName);
-            App.getInstance(DeviceClient.class).setNewUser(device, new SetNewUserResponseHandler());
+            App.getInstance(DeviceClient.class).setNewUser(device, new SetNewUserResponseCallback());
         }
         viewable.removeKeyboard();
 
     }
 
-    private class SetNewUserResponseHandler implements ResponseHandler {
+    private class SetNewUserResponseCallback implements ResponseCallback {
         @Override
         public void onSuccess() {
             viewable.clearEditText();

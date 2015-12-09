@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import eu.dubedout.devicecounter.architecture.Exception.UserDoesNotExistException;
 import eu.dubedout.devicecounter.architecture.Exception.UsernameAlreadyTaken;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseHandler;
 import eu.dubedout.devicecounter.business.bo.User;
 import eu.dubedout.devicecounter.client.UserClient;
 import eu.dubedout.devicecounter.helper.StringHelper;
@@ -38,9 +38,9 @@ public class LoginActivityPresenter {
 
     public void onSendButtonClick(String email, String password) {
         if (isFieldsNotEmpty(email, password) && isLoginMode) {
-            userClient.login(email, password, getLoginResponseCallback());
+            userClient.login(email, password, getLoginResponseHandler());
         } else if (isFieldsNotEmpty(email, password) && !isLoginMode) {
-            userClient.signUp(email, password, getSignUpAccountCallback());
+            userClient.signUp(email, password, getCreateAccountHandler());
         }
     }
 
@@ -49,11 +49,11 @@ public class LoginActivityPresenter {
     }
 
     @NonNull
-    private ResponseCallback<User> getLoginResponseCallback() {
-        return new ResponseCallback<User>() {
+    private ResponseHandler<User> getLoginResponseHandler() {
+        return new ResponseHandler<User>() {
             @Override
             public void onSuccess(User user) {
-                viewable.launchMainActivityForResult(); // TODO: VincentD 15-11-24 navigate to main activity
+                viewable.launchMainActivity(user);
             }
 
             @Override
@@ -67,17 +67,19 @@ public class LoginActivityPresenter {
         };
     }
 
-    public ResponseCallback<User> getSignUpAccountCallback() {
-        return new ResponseCallback<User>() {
+    public ResponseHandler<User> getCreateAccountHandler() {
+        return new ResponseHandler<User>() {
             @Override
-            public void onSuccess(User object) {
-                viewable.launchMainActivityForResult();
+            public void onSuccess(User user) {
+                viewable.launchMainActivity(user);
             }
 
             @Override
             public void onFailure(Throwable throwable) {
                 if (throwable instanceof UsernameAlreadyTaken) {
                     viewable.displayErrorRegisteringEmailAlreadyExist();
+                } else {
+                    viewable.displayGenericError(throwable.getMessage());
                 }
             }
         };
