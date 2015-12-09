@@ -3,7 +3,6 @@ package eu.dubedout.devicecounter.view.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,14 +25,12 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_device);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-
         presenter = new RegisterDevicePresenter();
-        presenter.onCreate(savedInstanceState, this);
 
         initializeViews();
 
+        presenter.onCreate(savedInstanceState, this);
     }
 
     private void initializeViews() {
@@ -54,16 +51,6 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
     public void launchMainActivityForResult() {
         setResult(RESULT_OK);
         finish();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override

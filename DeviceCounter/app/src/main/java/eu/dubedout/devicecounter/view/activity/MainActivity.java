@@ -51,13 +51,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Intent login = new Intent(this,LoginActivity.class);
-        startActivityForResult(login, Const.ForResult.LOGIN_USER);
+        launchLoginActivity();
+        presenter = new MainActivityPresenter(this);
 
         initializeToolbar();
         initializeViews();
 
-        presenter = new MainActivityPresenter(this);
         presenter.onCreate(savedInstanceState);
 
     }
@@ -85,13 +84,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
                 }
                 break;
             }
-            case (Const.ForResult.LOGIN_USER) : {
-                if (resultCode == RESULT_OK) {
-                    String username = data.getStringExtra(Const.StringIdentifier.USERNAME);
-                } else {
-                }
-                break;
-            }
         }
     }
 
@@ -107,15 +99,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
             case R.id.action_settings:
                 return true;
             case R.id.action_login:
-                displayLoginActivity();
+                launchLoginActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void displayLoginActivity() {
+    public void launchLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

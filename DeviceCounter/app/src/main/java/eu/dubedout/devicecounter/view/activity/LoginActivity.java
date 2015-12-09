@@ -16,7 +16,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import eu.dubedout.devicecounter.R;
-import eu.dubedout.devicecounter.architecture.Const;
 import eu.dubedout.devicecounter.client.UserClientImpl;
 import eu.dubedout.devicecounter.presenter.LoginActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
@@ -66,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
     @Override
     public void launchMainActivityForResult() {
         Intent resultIntent = getIntent();
-        resultIntent.putExtra(Const.StringIdentifier.USERNAME, activityLoginEmail.getText().toString());
+//        resultIntent.putExtra(Const.USERNAME, activityLoginEmail.getText().toString());
         setResult(RESULT_OK, resultIntent);
         finish();
     }
