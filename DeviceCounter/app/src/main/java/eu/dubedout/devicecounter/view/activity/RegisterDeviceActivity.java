@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.activity;
+package eu.dubedout.devicecounter.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.dubedout.devicecounter.R;
 import eu.dubedout.devicecounter.presenter.RegisterDevicePresenter;
+import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
 
 public class RegisterDeviceActivity extends AppCompatActivity implements RegisterDeviceViewable {
 
@@ -25,11 +26,11 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_device);
         ButterKnife.bind(this);
-
         presenter = new RegisterDevicePresenter();
-        presenter.onCreate(savedInstanceState, this);
 
         initializeViews();
+
+        presenter.onCreate(savedInstanceState, this);
     }
 
     private void initializeViews() {

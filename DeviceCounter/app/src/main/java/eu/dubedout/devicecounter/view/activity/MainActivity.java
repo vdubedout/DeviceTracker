@@ -1,4 +1,4 @@
-package eu.dubedout.devicecounter.activity;
+package eu.dubedout.devicecounter.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,9 +26,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import eu.dubedout.devicecounter.R;
-import eu.dubedout.devicecounter.adapter.DeviceAdapter;
-import eu.dubedout.devicecounter.bo.Device;
-import eu.dubedout.devicecounter.helper.Const;
+import eu.dubedout.devicecounter.view.adapter.DeviceAdapter;
+import eu.dubedout.devicecounter.business.bo.Device;
+import eu.dubedout.devicecounter.architecture.Const;
 import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
@@ -51,10 +51,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        presenter = new MainActivityPresenter(this);
+
         initializeToolbar();
         initializeViews();
 
-        presenter = new MainActivityPresenter(this);
         presenter.onCreate(savedInstanceState);
     }
 

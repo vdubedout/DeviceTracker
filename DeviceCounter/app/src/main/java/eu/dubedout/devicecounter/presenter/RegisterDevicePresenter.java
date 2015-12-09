@@ -3,11 +3,11 @@ package eu.dubedout.devicecounter.presenter;
 import android.os.Bundle;
 
 import eu.dubedout.devicecounter.App;
-import eu.dubedout.devicecounter.activity.RegisterDeviceViewable;
-import eu.dubedout.devicecounter.bo.Device;
+import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
+import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
-import eu.dubedout.devicecounter.helper.PreferencesHelper;
-import eu.dubedout.devicecounter.helper.ResponseHandler;
+import eu.dubedout.devicecounter.business.PreferencesService;
+import eu.dubedout.devicecounter.architecture.ResponseHandler;
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class RegisterDevicePresenter {
@@ -34,7 +34,7 @@ public class RegisterDevicePresenter {
         Device device = new Device(deviceLabelText, deviceModelText);
         App.getInstance(DeviceClient.class)
                 .setNewDevice(device, new RegisterDeviceResponseHandler());
-        App.getInstance(PreferencesHelper.class)
+        App.getInstance(PreferencesService.class)
                 .registerDevice(device);
     }
 

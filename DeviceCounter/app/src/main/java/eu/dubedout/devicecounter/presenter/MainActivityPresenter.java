@@ -5,11 +5,11 @@ import android.os.Bundle;
 import java.util.List;
 
 import eu.dubedout.devicecounter.App;
-import eu.dubedout.devicecounter.bo.Device;
+import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
-import eu.dubedout.devicecounter.helper.PreferencesHelper;
-import eu.dubedout.devicecounter.helper.ResponseCallback;
-import eu.dubedout.devicecounter.helper.ResponseHandler;
+import eu.dubedout.devicecounter.business.PreferencesService;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseHandler;
 import eu.dubedout.devicecounter.helper.StringHelper;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
@@ -62,14 +62,14 @@ public class MainActivityPresenter {
     }
 
     public boolean isDeviceRegistered() {
-        return !App.getInstance(PreferencesHelper.class)
+        return !App.getInstance(PreferencesService.class)
                 .getDeviceRegistered()
                 .isEmpty();
     }
 
     public void sendNewUser(String newUserName) {
         if (!StringHelper.isEmpty(newUserName)) {
-            Device device = App.getInstance(PreferencesHelper.class).getDeviceRegistered();
+            Device device = App.getInstance(PreferencesService.class).getDeviceRegistered();
             device.setUser(newUserName);
             App.getInstance(DeviceClient.class).setNewUser(device, new SetNewUserResponseHandler());
         }
