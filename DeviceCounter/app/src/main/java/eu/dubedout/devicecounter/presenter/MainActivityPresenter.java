@@ -4,27 +4,38 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import eu.dubedout.devicecounter.App;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.architecture.ResponseHandler;
+import eu.dubedout.devicecounter.business.PreferencesService;
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
-import eu.dubedout.devicecounter.business.PreferencesService;
-import eu.dubedout.devicecounter.architecture.ResponseHandler;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.client.UserClient;
 import eu.dubedout.devicecounter.helper.StringHelper;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
 
 public class MainActivityPresenter {
-    private MainActivityViewable viewable;
+    private final MainActivityViewable viewable;
+    private final DeviceClient deviceClient;
+    private final UserClient userClient;
+    private final PreferencesService preferencesService;
 
-    public MainActivityPresenter(MainActivityViewable viewable) {
+    public MainActivityPresenter(MainActivityViewable viewable,
+                                 DeviceClient deviceClient,
+                                 UserClient userClient,
+                                 PreferencesService preferencesService) {
         this.viewable = viewable;
+        this.deviceClient = deviceClient;
+        this.userClient = userClient;
+        this.preferencesService = preferencesService;
     }
 
     public void onCreate(Bundle savedInstanceState) {
         // TODO: VincentD 15-10-21 get savedInstanceState
 
-        if (isDeviceRegistered()) {
-            viewable.showNewUserRegisteringBox();
+        if (!isUserLoggedIn()) {
+            viewable.launchLoginActivity();
+        } else if (!isDeviceRegistered()) {
+            viewable.showRegisteringDeviceButton();
         }
 
         loadDeviceList();
@@ -32,13 +43,16 @@ public class MainActivityPresenter {
         // TODO: VincentD 15-10-21 last launch one day ago, show registering new user
     }
 
+    private boolean isUserLoggedIn() {
+        return userClient.isUserLoggedIn();
+    }
+
     public void registerNewDeviceClick() {
         viewable.launchDeviceRegistering();
     }
 
     private void loadDeviceList() {
-        App.getInstance(DeviceClient.class)
-            .getDevices(new ResponseHandler<List<Device>>() {
+        deviceClient.getDevices(new ResponseHandler<List<Device>>() {
                 @Override
                 public void onSuccess(List<Device> deviceList) {
                     viewable.loadDevicesList(deviceList);
@@ -52,7 +66,7 @@ public class MainActivityPresenter {
     }
 
     public void onSuccessRegisteringDevice() {
-        viewable.showNewUserRegisteringBox();
+        viewable.showRegisteringDeviceButton();
         loadDeviceList();
         // TODO: VincentD 15-11-12 display snack bar to let know the device is corretly setup
     }
@@ -62,16 +76,16 @@ public class MainActivityPresenter {
     }
 
     public boolean isDeviceRegistered() {
-        return !App.getInstance(PreferencesService.class)
+        return preferencesService
                 .getDeviceRegistered()
                 .isEmpty();
     }
 
     public void sendNewUser(String newUserName) {
         if (!StringHelper.isEmpty(newUserName)) {
-            Device device = App.getInstance(PreferencesService.class).getDeviceRegistered();
+            Device device = preferencesService.getDeviceRegistered();
             device.setUser(newUserName);
-            App.getInstance(DeviceClient.class).setNewUser(device, new SetNewUserResponseCallback());
+            deviceClient.setNewUser(device, new SetNewUserResponseCallback());
         }
         viewable.removeKeyboard();
 

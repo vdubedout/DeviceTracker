@@ -59,4 +59,9 @@ public class UserClientImpl implements UserClient {
             }
         });
     }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        return ParseUser.getCurrentUser().isAuthenticated();
+    }
 }

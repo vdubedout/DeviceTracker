@@ -25,7 +25,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.R;
+import eu.dubedout.devicecounter.business.PreferencesService;
+import eu.dubedout.devicecounter.client.DeviceClient;
+import eu.dubedout.devicecounter.client.UserClient;
 import eu.dubedout.devicecounter.view.adapter.DeviceAdapter;
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.architecture.Const;
@@ -51,8 +55,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        launchLoginActivity();
-        presenter = new MainActivityPresenter(this);
+        presenter = new MainActivityPresenter(this,
+                App.getInstance(DeviceClient.class),
+                App.getInstance(UserClient.class),
+                App.getInstance(PreferencesService.class));
 
         initializeToolbar();
         initializeViews();
@@ -106,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         }
     }
 
+    @Override
     public void launchLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -120,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     @Override
-    public void showNewUserRegisteringBox() {
+    public void showRegisteringDeviceButton() {
         registerNewUserWrapper.setVisibility(View.VISIBLE);
         buttonNewDevice.setVisibility(View.GONE);
     }

@@ -6,8 +6,10 @@ import eu.dubedout.devicecounter.business.bo.Device;
 
 public interface MainActivityViewable {
 
+    void launchLoginActivity();
+
     void launchDeviceRegistering();
-    void showNewUserRegisteringBox();
+    void showRegisteringDeviceButton();
     void showContent();
     void loadDevicesList(List<Device> deviceList);
     void removeKeyboard();

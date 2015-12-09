@@ -15,10 +15,11 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.R;
 import eu.dubedout.devicecounter.architecture.Const;
 import eu.dubedout.devicecounter.business.bo.User;
-import eu.dubedout.devicecounter.client.UserClientImpl;
+import eu.dubedout.devicecounter.client.UserClient;
 import eu.dubedout.devicecounter.presenter.LoginActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.LoginActivityViewable;
 
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
 
         setSupportActionBar(toolbar);
 
-        presenter = new LoginActivityPresenter(this, new UserClientImpl());
+        presenter = new LoginActivityPresenter(this, App.getInstance(UserClient.class));
         presenter.onCreate(savedInstanceState);
 
         initializeViews();
