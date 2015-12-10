@@ -11,8 +11,8 @@ import java.util.List;
 
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.business.PreferencesService;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.architecture.ResponseHandler;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class DeviceClientImpl implements DeviceClient {
@@ -30,7 +30,7 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     @Override
-    public void setNewDevice(final Device newDevice, final ResponseHandler callback) {
+    public void setNewDevice(final Device newDevice, final ResponseCallback callback) {
         final ParseObject parseDevice = getParseObjectFromDevice(newDevice);
         parseDevice.saveInBackground(new SaveCallback() {
             @Override
@@ -53,7 +53,7 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     @Override
-    public void setNewUser(final Device newUserNameDevice, final ResponseHandler callback) {
+    public void setNewUser(final Device newUserNameDevice, final ResponseCallback callback) {
         getParseObjectFromDevice(newUserNameDevice).saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -87,7 +87,7 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     @Override
-    public void getDevices(final ResponseCallback<List<Device>> responseHandler) {
+    public void getDevices(final ResponseHandler<List<Device>> responseHandler) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_DEVICE_OBJECT);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override

@@ -19,19 +19,25 @@
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.RegisterDeviceActivity"
             android:label="@string/new_device"
-            android:parentActivityName=".view.activity.MainActivity">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".view.activity.MainActivity"
+            >
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:label="@string/action_login"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 </manifest>
