@@ -7,7 +7,7 @@ import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.business.PreferencesService;
-import eu.dubedout.devicecounter.architecture.ResponseHandler;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class RegisterDevicePresenter {
@@ -33,12 +33,12 @@ public class RegisterDevicePresenter {
     private void registerNewDeviceBackend(String deviceLabelText, String deviceModelText) {
         Device device = new Device(deviceLabelText, deviceModelText);
         App.getInstance(DeviceClient.class)
-                .setNewDevice(device, new RegisterDeviceResponseHandler());
+                .setNewDevice(device, new RegisterDeviceResponseCallback());
         App.getInstance(PreferencesService.class)
                 .registerDevice(device);
     }
 
-    private class RegisterDeviceResponseHandler implements ResponseHandler {
+    private class RegisterDeviceResponseCallback implements ResponseCallback {
 
         @Override
         public void onSuccess() {

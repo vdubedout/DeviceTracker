@@ -1,7 +1,12 @@
 package eu.dubedout.devicecounter.business.bo;
 
-public class User {
-    public String username;
-    public String password;
-    public String email;
+import android.os.Parcelable;
+
+public interface User extends Parcelable {
+
+    String getUsername();
+    void setUsername(String username);
+
+    String getEmail();
+    void setEmail(String email);
 }

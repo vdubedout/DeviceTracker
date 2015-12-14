@@ -1,11 +1,22 @@
 <resources>
     <string name="app_name">DeviceCounter</string>
+
+    <string name="already_an_account_login">Already an account? Login</string>
     <string name="action_settings">Settings</string>
-    <string name="warning_device_not_registered_or_email_not_confirmed">Device has not been registered or email have not been confirmed</string>
+    <string name="action_login">Login</string>
+    <string name="action_create_account">Create Account</string>
+    <string name="email_already_registered">Email is already a registered user</string>
+    <string name="email_not_registered">Email is not a registered user</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_email">Email</string>
+    <string name="new_device">New Device</string>
+    <string name="new_user_sent_success">User Sent Sucessfully</string>
+    <string name="no_account_create_it">No account yet? Create one</string>
     <string name="register_new_device">Register New Device</string>
     <string name="register_new_user">Register New User</string>
-    <string name="new_device">New Device</string>
     <string name="register_new_label">Device Identifier</string>
     <string name="register_new_model">Device Model</string>
-    <string name="new_user_sent_success">User Sent Sucessfully</string>
+    <string name="title_activity_display_login">User Login</string>
+    <string name="warning_device_not_registered_or_email_not_confirmed">Device has not been registered or email have not been confirmed</string>
 </resources>
