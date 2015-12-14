@@ -14,6 +14,8 @@ import eu.dubedout.devicecounter.business.bo.User;
 import eu.dubedout.devicecounter.business.bo.UserParsedSpecific;
 
 public class UserClientImpl implements UserClient {
+    private static final String EMAIL_VERIFIED = "emailVerified";
+
     @Override
     public void login(String email, String password, ResponseHandler<User> responseHandler) {
         ParseUser.logInInBackground(email, password, logInCallback(responseHandler));
@@ -62,6 +64,14 @@ public class UserClientImpl implements UserClient {
 
     @Override
     public boolean isUserLoggedIn() {
-        return ParseUser.getCurrentUser().isAuthenticated();
+        return ParseUser.getCurrentUser() != null
+                && ParseUser.getCurrentUser().getBoolean(EMAIL_VERIFIED)
+                && ParseUser.getCurrentUser().isAuthenticated();
+    }
+
+    @Override
+    public boolean isUserVerifiedEmail() {
+        return ParseUser.getCurrentUser() != null
+                && ParseUser.getCurrentUser().getBoolean(EMAIL_VERIFIED);
     }
 }

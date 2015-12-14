@@ -32,8 +32,10 @@ public class MainActivityPresenter {
     public void onCreate(Bundle savedInstanceState) {
         // TODO: VincentD 15-10-21 get savedInstanceState
 
-        if (!isUserLoggedIn()) {
+        if (!userClient.isUserLoggedIn()) {
             viewable.launchLoginActivity();
+        } else if (!userClient.isUserVerifiedEmail()){
+            viewable.showWarningNonVerifiedEmail();
         } else if (!isDeviceRegistered()) {
             viewable.showRegisteringDeviceButton();
         }
@@ -43,26 +45,28 @@ public class MainActivityPresenter {
         // TODO: VincentD 15-10-21 last launch one day ago, show registering new user
     }
 
-    private boolean isUserLoggedIn() {
-        return userClient.isUserLoggedIn();
-    }
-
     public void registerNewDeviceClick() {
         viewable.launchDeviceRegistering();
     }
 
+    public void onErrorButtonClick() {
+        if (userClient.isUserVerifiedEmail()) {
+            viewable.hideWarningNonVerifiedEmail();
+        }
+    }
+
     private void loadDeviceList() {
         deviceClient.getDevices(new ResponseHandler<List<Device>>() {
-                @Override
-                public void onSuccess(List<Device> deviceList) {
-                    viewable.loadDevicesList(deviceList);
-                    viewable.showContent();
-                }
+            @Override
+            public void onSuccess(List<Device> deviceList) {
+                viewable.loadDevicesList(deviceList);
+                viewable.showContent();
+            }
 
-                @Override
-                public void onFailure(Throwable throwable) {
-                }
-            });
+            @Override
+            public void onFailure(Throwable throwable) {
+            }
+        });
     }
 
     public void onSuccessRegisteringDevice() {

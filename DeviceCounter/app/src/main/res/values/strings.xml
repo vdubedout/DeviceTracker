@@ -19,4 +19,6 @@
     <string name="register_new_model">Device Model</string>
     <string name="title_activity_display_login">User Login</string>
     <string name="warning_device_not_registered_or_email_not_confirmed">Device has not been registered or email have not been confirmed</string>
+    <string name="user_email_not_verified">User Email have not been verified. Please verify your inbox.</string>
+    <string name="retry">Retry</string>
 </resources>

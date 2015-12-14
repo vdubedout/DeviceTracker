@@ -25,16 +25,17 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.R;
+import eu.dubedout.devicecounter.architecture.Const;
 import eu.dubedout.devicecounter.business.PreferencesService;
+import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.client.UserClient;
-import eu.dubedout.devicecounter.view.adapter.DeviceAdapter;
-import eu.dubedout.devicecounter.business.bo.Device;
-import eu.dubedout.devicecounter.architecture.Const;
 import eu.dubedout.devicecounter.presenter.MainActivityPresenter;
 import eu.dubedout.devicecounter.presenter.viewable.MainActivityViewable;
+import eu.dubedout.devicecounter.view.adapter.DeviceAdapter;
 
 // TODO: VincentD 15-10-20 get domain name (Filter by domain to display devices
 public class MainActivity extends AppCompatActivity implements MainActivityViewable {
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     @Bind(R.id.content_main_register_new_user) EditText registerNewUser;
     @Bind(R.id.content_main_device_list) RecyclerView deviceRecyclerView;
     @Bind(R.id.content_main_loading_state) ProgressBar loadingProgress;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.content_main_error_text) TextView contentMainErrorText;
+    @Bind(R.id.content_main_error_button) Button contentMainErrorButton;
+
 
     private MainActivityPresenter presenter;
 
@@ -82,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
-            case (Const.ForResult.REGISTER_DEVICE) : {
+            case (Const.ForResult.REGISTER_DEVICE): {
                 if (resultCode == RESULT_OK) {
                     presenter.onSuccessRegisteringDevice();
                 } else {
@@ -160,6 +165,24 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         Snackbar.make(coordinatorLayout, R.string.new_user_sent_success, Snackbar.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void showWarningNonVerifiedEmail() {
+        contentMainErrorButton.setVisibility(View.VISIBLE);
+        contentMainErrorText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideWarningNonVerifiedEmail() {
+        contentMainErrorButton.setVisibility(View.GONE);
+        contentMainErrorText.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.content_main_error_button)
+    void onErrorButtonClick() {
+        presenter.onErrorButtonClick();
+    }
+    
+
     private class OnNewUserKeyboardSend implements TextView.OnEditorActionListener {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -170,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
             return false;
         }
     }
-
+    
     private class OnRegisterNewDeviceClick implements View.OnClickListener {
         @Override
         public void onClick(View v) {

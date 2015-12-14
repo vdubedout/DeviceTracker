@@ -7,13 +7,17 @@ import eu.dubedout.devicecounter.business.bo.Device;
 public interface MainActivityViewable {
 
     void launchLoginActivity();
-
     void launchDeviceRegistering();
+
     void showRegisteringDeviceButton();
     void showContent();
+    void showSentUserSuccess();
+    void showWarningNonVerifiedEmail();
+
     void loadDevicesList(List<Device> deviceList);
     void removeKeyboard();
     void clearEditText();
 
-    void showSentUserSuccess();
+
+    void hideWarningNonVerifiedEmail();
 }

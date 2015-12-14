@@ -9,4 +9,6 @@ public interface UserClient {
     void signUp(String email, String password, ResponseHandler<User> responseHandler);
 
     boolean isUserLoggedIn();
+
+    boolean isUserVerifiedEmail();
 }
