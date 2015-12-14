@@ -32,10 +32,10 @@ public class MainActivityPresenter {
     public void onCreate(Bundle savedInstanceState) {
         // TODO: VincentD 15-10-21 get savedInstanceState
 
-        if (!userClient.isUserLoggedIn()) {
-            viewable.launchLoginActivity();
-        } else if (!userClient.isUserVerifiedEmail()){
+        if (!userClient.isUserVerifiedEmail()){
             viewable.showWarningNonVerifiedEmail();
+        } else if (!userClient.isUserLoggedIn()) {
+            viewable.launchLoginActivity();
         } else if (!isDeviceRegistered()) {
             viewable.showRegisteringDeviceButton();
         }
@@ -89,7 +89,7 @@ public class MainActivityPresenter {
         if (!StringHelper.isEmpty(newUserName)) {
             Device device = preferencesService.getDeviceRegistered();
             device.setUser(newUserName);
-            deviceClient.setNewUser(device, new SetNewUserResponseCallback());
+            deviceClient.registerNewUserToDevice(device, new SetNewUserResponseCallback());
         }
         viewable.removeKeyboard();
 

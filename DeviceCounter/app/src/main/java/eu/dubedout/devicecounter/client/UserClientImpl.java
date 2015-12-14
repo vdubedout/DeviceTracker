@@ -2,6 +2,7 @@ package eu.dubedout.devicecounter.client;
 
 import android.support.annotation.NonNull;
 
+import com.orhanobut.logger.Logger;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -29,8 +30,10 @@ public class UserClientImpl implements UserClient {
                 if (user != null) {
                     responseHandler.onSuccess(new UserParsedSpecific(user));
                 } else if (userDoesNotExist(e)) {
+                    Logger.e("User does not exists : " + e.getMessage());
                     responseHandler.onFailure(new UserDoesNotExistException(e.getMessage()));
                 } else { // Generic error // TODO: VincentD 15-12-07 handle more specific errors
+                    Logger.e(e);
                     responseHandler.onFailure(new Throwable(e.getMessage()));
                 }
             }
@@ -54,8 +57,10 @@ public class UserClientImpl implements UserClient {
                     responseHandler.onSuccess(new UserParsedSpecific(parseUser));
                 } else if (e.getCode() == ParseException.EMAIL_TAKEN
                         || e.getCode() == ParseException.USERNAME_TAKEN) {
+                    Logger.e(e);
                     responseHandler.onFailure(new UsernameAlreadyTaken(e.getMessage()));
                 } else { // Generic Error // TODO: VincentD 15-12-07 handle more specific errors
+                    Logger.e(e);
                     responseHandler.onFailure(new Throwable(e.getMessage()));
                 }
             }
@@ -64,8 +69,7 @@ public class UserClientImpl implements UserClient {
 
     @Override
     public boolean isUserLoggedIn() {
-        return ParseUser.getCurrentUser() != null
-                && ParseUser.getCurrentUser().getBoolean(EMAIL_VERIFIED)
+        return isUserVerifiedEmail()
                 && ParseUser.getCurrentUser().isAuthenticated();
     }
 
