@@ -23,7 +23,6 @@ public class DeviceClientImpl implements DeviceClient {
     private static final String PARSE_DEVICE_MODEL = "model";
     private static final String PARSE_DEVICE_IDENTIFIER = "identifier";
     private static final String PARSE_DEVICE_CURRENT_USER = "currentUser";
-    private static final String PARSE_DEVICE_REGISTERED_BY = "registeredBy";
     private String deviceObjectId;
     private PreferencesService preferencesService;
 
@@ -78,7 +77,6 @@ public class DeviceClientImpl implements DeviceClient {
         addParseField(parseDevice, PARSE_DEVICE_IDENTIFIER, device.getIdentifier());
         addParseField(parseDevice, PARSE_DEVICE_MODEL, device.getModel());
         addParseField(parseDevice, PARSE_DEVICE_CURRENT_USER, device.getCurrentUser());
-        addParseField(parseDevice, PARSE_DEVICE_REGISTERED_BY, device.getRegisteredBy());
         if (!StringHelper.isEmpty(deviceObjectId)) {
             parseDevice.setObjectId(deviceObjectId);
         }
@@ -121,7 +119,6 @@ public class DeviceClientImpl implements DeviceClient {
                 .setIdentifier(parseDevice.getString(PARSE_DEVICE_IDENTIFIER))
                 .setModel(parseDevice.getString(PARSE_DEVICE_MODEL))
                 .setCurrentUser(parseDevice.getString(PARSE_DEVICE_CURRENT_USER))
-                .setRegisteredBy(parseDevice.getString(PARSE_DEVICE_REGISTERED_BY))
                 .setLastUpdated(parseDevice.getUpdatedAt())
                 .build();
     }
