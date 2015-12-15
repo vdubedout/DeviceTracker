@@ -11,7 +11,6 @@ public class PreferencesService {
     private static final String DEVICE_PREF_NAME = "device";
     private static final String PREF_DEVICE_IDENTIFIER = "device_identifier";
     private static final String PREF_DEVICE_MODEL = "device_model";
-    private static final String PREF_DEVICE_REGISTERBY = "register_by";
     private static final String PREF_PARSE_DEVICE_OBJECT_ID = "parse_object_id";
 
     private Context context;
@@ -24,7 +23,6 @@ public class PreferencesService {
         SharedPreferences.Editor editor = this.context.getSharedPreferences(DEVICE_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.putString(PREF_DEVICE_IDENTIFIER, device.getIdentifier());
         editor.putString(PREF_DEVICE_MODEL, device.getModel());
-        editor.putString(PREF_DEVICE_REGISTERBY, device.getRegisteredBy());
         editor.apply();
     }
 
@@ -32,13 +30,9 @@ public class PreferencesService {
         SharedPreferences pref = this.context.getSharedPreferences(DEVICE_PREF_NAME, Context.MODE_PRIVATE);
         String deviceId = pref.getString(PREF_DEVICE_IDENTIFIER, "");
         String deviceModel = pref.getString(PREF_DEVICE_MODEL, "");
-        String deviceRegisteredBy = pref.getString(PREF_DEVICE_REGISTERBY, "");
         if (!StringHelper.isEmpty(deviceId)
-                && !StringHelper.isEmpty(deviceModel)
-                && !StringHelper.isEmpty(deviceRegisteredBy)) {
-            Device device = new Device(deviceId, deviceModel);
-            device.setRegisteredBy(deviceRegisteredBy);
-            return device;
+                && !StringHelper.isEmpty(deviceModel)) {
+            return new Device(deviceId, deviceModel);
         }
         return Device.EMPTY_DEVICE;
     }
