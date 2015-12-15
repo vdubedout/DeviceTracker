@@ -69,13 +69,30 @@ public class UserClientImpl implements UserClient {
 
     @Override
     public boolean isUserLoggedIn() {
-        return isUserVerifiedEmail()
-                && ParseUser.getCurrentUser().isAuthenticated();
+        return ParseUser.getCurrentUser() != null && ParseUser.getCurrentUser().isAuthenticated();
     }
 
     @Override
     public boolean isUserVerifiedEmail() {
-        return ParseUser.getCurrentUser() != null
-                && ParseUser.getCurrentUser().getBoolean(EMAIL_VERIFIED);
+        if (ParseUser.getCurrentUser() != null
+                && ParseUser.getCurrentUser().getBoolean(EMAIL_VERIFIED)) {
+            return true;
+        } else if (ParseUser.getCurrentUser() != null
+                && !ParseUser.getCurrentUser().getBoolean(EMAIL_VERIFIED)) {
+            refreshCurrentUser();
+            if (ParseUser.getCurrentUser().getBoolean(EMAIL_VERIFIED)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void refreshCurrentUser() {
+        try {
+            ParseUser.getCurrentUser().fetch();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

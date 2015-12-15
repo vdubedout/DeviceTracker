@@ -32,35 +32,40 @@ public class MainActivityPresenter {
     public void onCreate(Bundle savedInstanceState) {
         // TODO: VincentD 15-10-21 get savedInstanceState
 
-        if (!userClient.isUserVerifiedEmail()){
-            viewable.showWarningNonVerifiedEmail();
-        } else if (!userClient.isUserLoggedIn()) {
-            viewable.launchLoginActivity();
-        } else if (!isDeviceRegistered()) {
-            viewable.showRegisteringDeviceButton();
-        }
-
-        loadDeviceList();
-
-        // TODO: VincentD 15-10-21 last launch one day ago, show registering new user
+        setUpMainViewsAndLoadData();
     }
 
-    public void registerNewDeviceClick() {
+    private void setUpMainViewsAndLoadData() {
+        if (!userClient.isUserLoggedIn()) {
+            viewable.launchLoginActivity();
+        } else if (!userClient.isUserVerifiedEmail()) {
+            viewable.hideHeaderRegisteringFields();
+            viewable.showUserNotVerifiedHisEmail();
+        } else if (!isDeviceRegistered()) {
+            viewable.showRegisterDeviceButton();
+            loadDeviceList();
+        } else {
+            viewable.showRegisterNewUserField();
+            loadDeviceList();
+        }
+    }
+
+    public void onNewDeviceClick() {
         viewable.launchDeviceRegistering();
     }
 
-    public void onErrorButtonClick() {
-        if (userClient.isUserVerifiedEmail()) {
-            viewable.hideWarningNonVerifiedEmail();
-        }
+    public void onRetryEmailNotVerifiedButtonClick() {
+        setUpMainViewsAndLoadData();
     }
 
     private void loadDeviceList() {
+        viewable.showLoadingData();
+
         deviceClient.getDevices(new ResponseHandler<List<Device>>() {
             @Override
             public void onSuccess(List<Device> deviceList) {
                 viewable.loadDevicesList(deviceList);
-                viewable.showContent();
+                viewable.showRegisteredDevicesList();
             }
 
             @Override
@@ -70,8 +75,7 @@ public class MainActivityPresenter {
     }
 
     public void onSuccessRegisteringDevice() {
-        viewable.showRegisteringDeviceButton();
-        loadDeviceList();
+        setUpMainViewsAndLoadData();
         // TODO: VincentD 15-11-12 display snack bar to let know the device is corretly setup
     }
 
@@ -80,7 +84,7 @@ public class MainActivityPresenter {
     }
 
     public boolean isDeviceRegistered() {
-        return preferencesService
+        return !preferencesService
                 .getDeviceRegistered()
                 .isEmpty();
     }
@@ -99,7 +103,7 @@ public class MainActivityPresenter {
         @Override
         public void onSuccess() {
             viewable.clearEditText();
-            viewable.showSentUserSuccess();
+            viewable.displaySentUserSuccess();
             loadDeviceList();
         }
 

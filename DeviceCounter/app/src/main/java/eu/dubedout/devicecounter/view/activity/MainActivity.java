@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
 
     private void initializeViews() {
         registerNewUser.setOnEditorActionListener(new OnNewUserKeyboardSend());
-        buttonNewDevice.setOnClickListener(new OnRegisterNewDeviceClick());
         deviceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -132,15 +131,48 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
     }
 
     @Override
-    public void showRegisteringDeviceButton() {
+    public void showRegisterDeviceButton() {
+        registerNewUserWrapper.setVisibility(View.GONE);
+        buttonNewDevice.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showRegisterNewUserField() {
         registerNewUserWrapper.setVisibility(View.VISIBLE);
         buttonNewDevice.setVisibility(View.GONE);
     }
 
     @Override
-    public void showContent() {
+    public void hideHeaderRegisteringFields() {
+        registerNewUserWrapper.setVisibility(View.GONE);
+        buttonNewDevice.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showRegisteredDevicesList() {
         deviceRecyclerView.setVisibility(View.VISIBLE);
         loadingProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoadingData() {
+        loadingProgress.setVisibility(View.VISIBLE);
+        deviceRecyclerView.setVisibility(View.GONE);
+        contentMainErrorButton.setVisibility(View.GONE);
+        contentMainErrorText.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showUserNotVerifiedHisEmail() {
+        loadingProgress.setVisibility(View.GONE);
+
+        contentMainErrorButton.setVisibility(View.VISIBLE);
+        contentMainErrorText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void displaySentUserSuccess() {
+        Snackbar.make(coordinatorLayout, R.string.new_user_sent_success, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -153,35 +185,22 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(registerNewUser.getWindowToken(), 0);
     }
-
     @Override
     public void clearEditText() {
         registerNewUser.setText("");
         registerNewUser.clearFocus();
     }
 
-    @Override
-    public void showSentUserSuccess() {
-        Snackbar.make(coordinatorLayout, R.string.new_user_sent_success, Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showWarningNonVerifiedEmail() {
-        contentMainErrorButton.setVisibility(View.VISIBLE);
-        contentMainErrorText.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideWarningNonVerifiedEmail() {
-        contentMainErrorButton.setVisibility(View.GONE);
-        contentMainErrorText.setVisibility(View.GONE);
-    }
 
     @OnClick(R.id.content_main_error_button)
-    void onErrorButtonClick() {
-        presenter.onErrorButtonClick();
+    void onRetryCheckingEmailVerificationClick() {
+        presenter.onRetryEmailNotVerifiedButtonClick();
     }
-    
+
+    @OnClick(R.id.content_main_register_new_device)
+    void onNewDeviceClick() {
+        presenter.onNewDeviceClick();
+    }
 
     private class OnNewUserKeyboardSend implements TextView.OnEditorActionListener {
         @Override
@@ -192,12 +211,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityViewa
             }
             return false;
         }
-    }
-    
-    private class OnRegisterNewDeviceClick implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            presenter.registerNewDeviceClick();
-        }
+
     }
 }
