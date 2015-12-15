@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DeviceCounter</string>
+    <string name="app_name">DeviceTracker</string>
 
     <string name="already_an_account_login">Already an account? Login</string>
     <string name="action_settings">Settings</string>
