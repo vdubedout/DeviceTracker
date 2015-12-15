@@ -1,0 +1,48 @@
+package eu.dubedout.devicetracker;
+
+import android.app.Application;
+
+import com.parse.Parse;
+
+import java.util.HashMap;
+
+import eu.dubedout.devicetracker.client.DeviceClient;
+import eu.dubedout.devicetracker.client.DeviceClientImpl;
+import eu.dubedout.devicetracker.business.PreferencesService;
+import eu.dubedout.devicetracker.architecture.ServiceRegistryImpl;
+import eu.dubedout.devicetracker.client.UserClient;
+import eu.dubedout.devicetracker.client.UserClientImpl;
+
+public class App extends Application {
+    private static final String PARSE_APPLICATION_ID = "eOjAfYckkkxD31cKbNeOIiGDBvGsaqGWWD5wlqyq";
+    private static final String PARSE_APPLICATION_KEY = "HkHLLkd0Hb7yVwhjBFKZYi1979y0qVk8xq7jAbzb";
+    private static ServiceRegistryImpl serviceRegistry;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        Parse.initialize(this,
+                PARSE_APPLICATION_ID,
+                PARSE_APPLICATION_KEY);
+
+        createServiceRegistry();
+    }
+
+    private void createServiceRegistry() {
+        serviceRegistry = new ServiceRegistryImpl();
+
+        HashMap<Class, Object> map = new HashMap<>();
+        PreferencesService preferencesService = new PreferencesService(this);
+        map.put(PreferencesService.class, preferencesService);
+        map.put(DeviceClient.class, new DeviceClientImpl(preferencesService));
+        map.put(UserClient.class, new UserClientImpl());
+        serviceRegistry.create(map);
+    }
+
+    public static <T> T getInstance(Class<T> clazz) {
+        return serviceRegistry.getInstance(clazz);
+    }
+
+
+}

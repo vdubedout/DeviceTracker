@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "eu.dubedout.devicecounter"
+        applicationId "eu.dubedout.devicetracker"
         minSdkVersion 10
         targetSdkVersion 23
         versionCode 1
