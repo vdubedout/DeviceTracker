@@ -5,44 +5,27 @@ import java.util.Date;
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class Device {
-    public static final String REGISTER_BY_DEFAULT = "ypgmobiledevteam@gmail.com";
     public static Device EMPTY_DEVICE = new Device();
 
     private String identifier = "";
     private String model = "";
     private String currentUser = "";
     private Date updatedAt;
-    private String registeredBy = "";
 
     private Device() {
+
     }
 
     public Device(String identifier, String model) {
         this(identifier, model, "", new Date(System.currentTimeMillis()));
     }
 
-    public Device(String identifier, String model, String currentUser, Date updatedAt) {
-        this(identifier,
-                model,
-                currentUser,
-                updatedAt,
-                REGISTER_BY_DEFAULT);
-    }
 
-    public Device(String identifier, String model, String currentUser, Date date, String registeredBy) {
+    public Device(String identifier, String model, String currentUser, Date date) {
         this.identifier = identifier;
         this.model = model;
         this.currentUser = currentUser;
         this.updatedAt = date;
-        this.registeredBy = registeredBy;
-    }
-
-    public String getRegisteredBy() {
-        return registeredBy;
-    }
-
-    public void setRegisteredBy(String registeredBy) {
-        this.registeredBy = registeredBy;
     }
 
     public void setUser(String user) {
@@ -77,7 +60,6 @@ public class Device {
         private String model;
         private String currentUser;
         private Date date;
-        private String registeredBy;
 
         public Builder setIdentifier(String identifier) {
             this.identifier = identifier;
@@ -99,13 +81,8 @@ public class Device {
             return this;
         }
 
-        public Builder setRegisteredBy(String registeredBy) {
-            this.registeredBy = registeredBy;
-            return this;
-        }
-
         public Device build() {
-            return new Device(identifier, model, currentUser, date, registeredBy);
+            return new Device(identifier, model, currentUser, date);
         }
     }
 }

@@ -1,9 +1,12 @@
 package eu.dubedout.devicecounter.client;
 
+import com.orhanobut.logger.Logger;
 import com.parse.FindCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
@@ -11,8 +14,8 @@ import java.util.List;
 
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.business.PreferencesService;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.architecture.ResponseHandler;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.helper.StringHelper;
 
 public class DeviceClientImpl implements DeviceClient {
@@ -20,7 +23,6 @@ public class DeviceClientImpl implements DeviceClient {
     private static final String PARSE_DEVICE_MODEL = "model";
     private static final String PARSE_DEVICE_IDENTIFIER = "identifier";
     private static final String PARSE_DEVICE_CURRENT_USER = "currentUser";
-    private static final String PARSE_DEVICE_REGISTERED_BY = "registeredBy";
     private String deviceObjectId;
     private PreferencesService preferencesService;
 
@@ -30,8 +32,9 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     @Override
-    public void setNewDevice(final Device newDevice, final ResponseHandler callback) {
+    public void setNewDevice(final Device newDevice, final ResponseCallback callback) {
         final ParseObject parseDevice = getParseObjectFromDevice(newDevice);
+        parseDevice.setACL(new ParseACL(ParseUser.getCurrentUser()));
         parseDevice.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -39,6 +42,7 @@ public class DeviceClientImpl implements DeviceClient {
                     saveDeviceObjectId(parseDevice.getObjectId());
                     callback.onSuccess();
                 } else {
+                    Logger.e(e.getMessage());
                     callback.onFailure(e);
                 }
             }
@@ -53,13 +57,14 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     @Override
-    public void setNewUser(final Device newUserNameDevice, final ResponseHandler callback) {
+    public void registerNewUserToDevice(final Device newUserNameDevice, final ResponseCallback callback) {
         getParseObjectFromDevice(newUserNameDevice).saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
                     callback.onSuccess();
                 } else {
+                    Logger.e(e.getMessage());
                     callback.onFailure(e);
                 }
             }
@@ -72,7 +77,6 @@ public class DeviceClientImpl implements DeviceClient {
         addParseField(parseDevice, PARSE_DEVICE_IDENTIFIER, device.getIdentifier());
         addParseField(parseDevice, PARSE_DEVICE_MODEL, device.getModel());
         addParseField(parseDevice, PARSE_DEVICE_CURRENT_USER, device.getCurrentUser());
-        addParseField(parseDevice, PARSE_DEVICE_REGISTERED_BY, device.getRegisteredBy());
         if (!StringHelper.isEmpty(deviceObjectId)) {
             parseDevice.setObjectId(deviceObjectId);
         }
@@ -87,7 +91,7 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     @Override
-    public void getDevices(final ResponseCallback<List<Device>> responseHandler) {
+    public void getDevices(final ResponseHandler<List<Device>> responseHandler) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(PARSE_DEVICE_OBJECT);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -95,6 +99,7 @@ public class DeviceClientImpl implements DeviceClient {
                 if (parseDevices != null) {
                     responseHandler.onSuccess(getDeviceListFromParseObjectList(parseDevices));
                 } else {
+                    Logger.e(exception.getMessage());
                     responseHandler.onFailure(exception);
                 }
             }
@@ -114,7 +119,6 @@ public class DeviceClientImpl implements DeviceClient {
                 .setIdentifier(parseDevice.getString(PARSE_DEVICE_IDENTIFIER))
                 .setModel(parseDevice.getString(PARSE_DEVICE_MODEL))
                 .setCurrentUser(parseDevice.getString(PARSE_DEVICE_CURRENT_USER))
-                .setRegisteredBy(parseDevice.getString(PARSE_DEVICE_REGISTERED_BY))
                 .setLastUpdated(parseDevice.getUpdatedAt())
                 .build();
     }
