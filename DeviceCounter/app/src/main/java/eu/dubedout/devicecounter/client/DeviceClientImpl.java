@@ -1,9 +1,12 @@
 package eu.dubedout.devicecounter.client;
 
+import com.orhanobut.logger.Logger;
 import com.parse.FindCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class DeviceClientImpl implements DeviceClient {
     @Override
     public void setNewDevice(final Device newDevice, final ResponseCallback callback) {
         final ParseObject parseDevice = getParseObjectFromDevice(newDevice);
+        parseDevice.setACL(new ParseACL(ParseUser.getCurrentUser()));
         parseDevice.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -39,6 +43,7 @@ public class DeviceClientImpl implements DeviceClient {
                     saveDeviceObjectId(parseDevice.getObjectId());
                     callback.onSuccess();
                 } else {
+                    Logger.e(e.getMessage());
                     callback.onFailure(e);
                 }
             }
@@ -53,13 +58,14 @@ public class DeviceClientImpl implements DeviceClient {
     }
 
     @Override
-    public void setNewUser(final Device newUserNameDevice, final ResponseCallback callback) {
+    public void registerNewUserToDevice(final Device newUserNameDevice, final ResponseCallback callback) {
         getParseObjectFromDevice(newUserNameDevice).saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
                     callback.onSuccess();
                 } else {
+                    Logger.e(e.getMessage());
                     callback.onFailure(e);
                 }
             }
@@ -95,6 +101,7 @@ public class DeviceClientImpl implements DeviceClient {
                 if (parseDevices != null) {
                     responseHandler.onSuccess(getDeviceListFromParseObjectList(parseDevices));
                 } else {
+                    Logger.e(exception.getMessage());
                     responseHandler.onFailure(exception);
                 }
             }

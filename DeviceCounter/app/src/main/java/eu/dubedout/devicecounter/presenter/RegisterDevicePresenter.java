@@ -2,16 +2,22 @@ package eu.dubedout.devicecounter.presenter;
 
 import android.os.Bundle;
 
-import eu.dubedout.devicecounter.App;
-import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
+import eu.dubedout.devicecounter.architecture.ResponseCallback;
+import eu.dubedout.devicecounter.business.PreferencesService;
 import eu.dubedout.devicecounter.business.bo.Device;
 import eu.dubedout.devicecounter.client.DeviceClient;
-import eu.dubedout.devicecounter.business.PreferencesService;
-import eu.dubedout.devicecounter.architecture.ResponseCallback;
 import eu.dubedout.devicecounter.helper.StringHelper;
+import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
 
 public class RegisterDevicePresenter {
+    private final DeviceClient deviceClient;
+    private final PreferencesService preferencesService;
     private RegisterDeviceViewable viewable;
+
+    public RegisterDevicePresenter(DeviceClient deviceClient, PreferencesService preferencesService) {
+        this.deviceClient = deviceClient;
+        this.preferencesService = preferencesService;
+    }
 
     public void onCreate(Bundle savedInstanceState, RegisterDeviceViewable viewable) {
         // TODO: VincentD 15-10-27 save instance state, recover on rotation
@@ -32,10 +38,8 @@ public class RegisterDevicePresenter {
 
     private void registerNewDeviceBackend(String deviceLabelText, String deviceModelText) {
         Device device = new Device(deviceLabelText, deviceModelText);
-        App.getInstance(DeviceClient.class)
-                .setNewDevice(device, new RegisterDeviceResponseCallback());
-        App.getInstance(PreferencesService.class)
-                .registerDevice(device);
+        deviceClient.setNewDevice(device, new RegisterDeviceResponseCallback());
+        preferencesService.registerDevice(device);
     }
 
     private class RegisterDeviceResponseCallback implements ResponseCallback {

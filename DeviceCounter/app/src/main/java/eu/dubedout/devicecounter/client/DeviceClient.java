@@ -9,7 +9,7 @@ import eu.dubedout.devicecounter.architecture.ResponseCallback;
 public interface DeviceClient {
     void setNewDevice(Device newDevice, ResponseCallback callback);
 
-    void setNewUser(Device newUserName, ResponseCallback callback);
+    void registerNewUserToDevice(Device newUserName, ResponseCallback callback);
 
     void getDevices(ResponseHandler<List<Device>> responseHandler);
 }

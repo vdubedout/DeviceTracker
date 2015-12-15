@@ -9,7 +9,10 @@ import android.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import eu.dubedout.devicecounter.App;
 import eu.dubedout.devicecounter.R;
+import eu.dubedout.devicecounter.business.PreferencesService;
+import eu.dubedout.devicecounter.client.DeviceClient;
 import eu.dubedout.devicecounter.presenter.RegisterDevicePresenter;
 import eu.dubedout.devicecounter.presenter.viewable.RegisterDeviceViewable;
 
@@ -26,7 +29,9 @@ public class RegisterDeviceActivity extends AppCompatActivity implements Registe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_device);
         ButterKnife.bind(this);
-        presenter = new RegisterDevicePresenter();
+        presenter = new RegisterDevicePresenter(
+                App.getInstance(DeviceClient.class),
+                App.getInstance(PreferencesService.class));
 
         initializeViews();
 

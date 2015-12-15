@@ -61,4 +61,19 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         />
+
+    <TextView
+        android:id="@+id/content_main_error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/user_email_not_verified"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/content_main_error_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        android:visibility="gone"/>
 </LinearLayout>
